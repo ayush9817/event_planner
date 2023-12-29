@@ -14,11 +14,12 @@ export default function Dashboard() {
 
   async function getData() {
 
+    const token = localStorage.getItem("authtoken");
     // const navigate = useNavigate();
      try {
        const res = await axios.get(`http://127.0.0.1:8000/data/missions-count-by-category/`, {
          headers: {
-           Authorization: `Token caff76fc134cbad91726812cbc04dd040b9bf62e`,
+          Authorization: `Token ${token}`,
          },
        });
        console.log(res.data.data, " i am a dashboard");
@@ -94,7 +95,7 @@ export default function Dashboard() {
         </div>
       </div>
       <div className=" w-full ">
-      <div className="ml-[215px] ">
+      <div className="ml-[180px] ">
 
       {xAxisData.length > 0 ? (
             <BarChart

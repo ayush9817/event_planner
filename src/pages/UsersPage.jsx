@@ -31,12 +31,14 @@ export default function UsersPage() {
   const currentRows = userData.slice(indexOfFirstRow, indexOfLastRow);
 
   const handleChange = async (userId,currentIsActive) => {
+    const token = localStorage.getItem("authtoken");
     const newIsActive = !currentIsActive;
+
 
     try {
       const res = await axios.patch(`http://127.0.0.1:8000/account/users/${userId}`,{ is_active: newIsActive } ,{
         headers: {
-            Authorization: `Token caff76fc134cbad91726812cbc04dd040b9bf62e`,
+          Authorization: `Token ${token}`,
         },
       });
       //console.log(res.data.data.result, "userDataname");
@@ -65,11 +67,12 @@ export default function UsersPage() {
   const navigate = useNavigate();
   async function getUserData() {
 
+    const token = localStorage.getItem("authtoken");
    // const navigate = useNavigate();
     try {
       const res = await axios.get(`${base_Url}account/users/`, {
         headers: {
-          Authorization: `Token caff76fc134cbad91726812cbc04dd040b9bf62e`,
+          Authorization: `Token ${token}`,
         },
       });
       console.log(res.data.data.result, " i am a response");
@@ -84,11 +87,12 @@ export default function UsersPage() {
   }, [checked]);
 
   async function deleteUser(id) {
+    const token = localStorage.getItem("authtoken");
     try {
       console.log(id,"user")
       await axios.delete(`${base_Url}account/users/${id}`, {
         headers: {
-          Authorization: `Token caff76fc134cbad91726812cbc04dd040b9bf62e`,
+          Authorization: `Token ${token}`,
         },
       });
 

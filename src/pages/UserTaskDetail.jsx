@@ -65,10 +65,11 @@ const UserTaskDetail = () => {
         }, []);
   
         async function getMissionUserData() {
+          const token = localStorage.getItem("authtoken");
           try {
             const res = await axios.get(`http://127.0.0.1:8000/data/user-completed-tasks-checklist/?user_id=${userId}&mission_id=${missionId}`, {
               headers: {
-                  Authorization: `Token caff76fc134cbad91726812cbc04dd040b9bf62e`,
+                Authorization: `Token ${token}`,
               },
             });
             console.log(res.data.data, "userDatastatus");
@@ -78,10 +79,11 @@ const UserTaskDetail = () => {
           }
         }
         async function getUserName() {
+          
           try {
             const res = await axios.get(`http://127.0.0.1:8000/account/users/?id=${userId}`, {
               headers: {
-                  Authorization: `Token caff76fc134cbad91726812cbc04dd040b9bf62e`,
+                Authorization: `Token ${token}`,
               },
             });
             console.log(res.data.data.result, "userDatanamestatus");

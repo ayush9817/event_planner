@@ -38,10 +38,11 @@ const UserDetails = () => {
       }, []);
 
       async function getMissionUserData() {
+        const token = localStorage.getItem("authtoken");
         try {
           const res = await axios.get(`http://127.0.0.1:8000/data/user-missions/?user=${userId}`, {
             headers: {
-                Authorization: `Token caff76fc134cbad91726812cbc04dd040b9bf62e`,
+              Authorization: `Token ${token}`,
             },
           });
           console.log(res.data.data.result, "userData");
@@ -51,10 +52,11 @@ const UserDetails = () => {
         }
       }
       async function getUserName() {
+        const token = localStorage.getItem("authtoken");
         try {
           const res = await axios.get(`http://127.0.0.1:8000/account/users/?id=${userId}`, {
             headers: {
-                Authorization: `Token caff76fc134cbad91726812cbc04dd040b9bf62e`,
+              Authorization: `Token ${token}`,
             },
           });
           console.log(res.data.data.result, "userDataname");
