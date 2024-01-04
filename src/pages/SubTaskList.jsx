@@ -149,7 +149,7 @@ export default function SubTaskList() {
                         <p className="font-black text-base ">Task Name</p>
                       </TableCell>
                       <TableCell align="left">
-                        <p className="font-black text-base ">Category</p>
+                        <p className="font-black text-base ">Mission Name</p>
                       </TableCell>
                       <TableCell style={{ paddingRight: "70px" }} align="right">
                         <p className="font-black text-base ">Action</p>

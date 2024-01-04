@@ -11,6 +11,7 @@ import axios from "axios";
 
 export default function Dashboard() {
   const [Data, setData] = useState([]);
+  const [userData, setUserData] = useState([]);
 
   async function getData() {
 
@@ -47,8 +48,27 @@ export default function Dashboard() {
     // },
   };
 
+  async function getUserData() {
+
+    const token = localStorage.getItem("authtoken");
+   // const navigate = useNavigate();
+    try {
+      const res = await axios.get(`http://127.0.0.1:8000/account/users/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+      console.log(res.data.data.result, " i am a response");
+      setUserData(res.data.data.result);
+    } catch (error) {
+
+      console.log(error,"user");
+    }
+  }
+
   useEffect(() => {
     getData();
+    getUserData()
   }, []);
 
   //const xAxisData=["movie"];
@@ -58,6 +78,9 @@ export default function Dashboard() {
 
   const xAxisData = Data?.map((item) => item.mission_type__mission_type);
   const seriesData = Data?.map((item) => item.count);
+
+  const xAxisDataLength = xAxisData ? xAxisData.length : 0;
+  const seriesDataSum = seriesData ? seriesData.reduce((sum, value) => sum + value, 0) : 0;
 
 
   return (
@@ -69,7 +92,7 @@ export default function Dashboard() {
         <div className="min-height bg-blue w-full bg-gray rounded-lg flex justify-between items-center">
           <div className="text-sm font-medium text-gray truncate">
             Total users
-            <div className="mt-1 text-3xl font-semibold text-gray">1,200</div>
+            <div className="mt-1 text-3xl font-semibold text-gray">{userData.length}</div>
           </div>
           <div className="home-icon">
             <User size={35} />
@@ -78,7 +101,7 @@ export default function Dashboard() {
         <div className="min-height bg-darkblue w-full bg-gray rounded-lg flex justify-between items-center">
           <div className="text-sm font-medium text-gray truncate ">
             Total Categories
-            <div className="mt-1 text-3xl font-semibold text-gray ">20</div>
+            <div className="mt-1 text-3xl font-semibold text-gray ">{xAxisDataLength}</div>
           </div>
           <div className="home-icon">
             <Settings2 size={35} />
@@ -87,7 +110,7 @@ export default function Dashboard() {
         <div className="min-height bg-peach w-fullbg-gray rounded-lg flex justify-between items-center">
           <div className="text-sm font-medium text-gray truncate ">
             Total Missions
-            <div className="mt-1 text-3xl font-semibold text-gray ">200</div>
+            <div className="mt-1 text-3xl font-semibold text-gray ">{seriesDataSum}</div>
           </div>
           <div className="home-icon">
             <CalendarCheck size={35} />

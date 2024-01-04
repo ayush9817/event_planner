@@ -71,6 +71,42 @@ export default function Header({
     console.log(selectedItem.id, " I am an option");
     filterBasedOnCatagory(selectedItem.id);
   };
+  const handleMenuItemClickAll = async (event) => {
+    event.preventDefault();
+    setIsMenuOpen(false);
+    try {
+      const res = await axios.get(
+        `${base_Url}/data/missions/`,
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+      console.log(res.data.data.result, "filtered data");
+      setMData(res.data.data.result);
+    } catch (error) { 
+      console.log(error);
+    }
+  };
+  const handleMenuItemClickFeature = async (event) => {
+    event.preventDefault();
+    setIsMenuOpen(false);
+    try {
+      const res = await axios.get(
+        `${base_Url}/data/missions/?is_featured=true`,
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+      console.log(res.data.data.result, "filtered data");
+      setMData(res.data.data.result);
+    } catch (error) { 
+      console.log(error);
+    }
+  };
   const [open, setOpen] = React.useState(false);
   const [mission, setMission] = useState("");
   const navigate = useNavigate();
@@ -193,6 +229,33 @@ export default function Header({
       >
         <Menu.Items className="absolute right-0 z-10 mt-2 w-[128px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
+          <Menu.Item  
+                onClick={(event) => handleMenuItemClickAll(event)} >
+                {({ active }) => (<a
+                    href="#"
+                    className={classNames(
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm'
+                    )}
+                  >
+                    All
+                  </a>
+                )}
+              </Menu.Item>
+          <Menu.Item  
+                onClick={(event) => handleMenuItemClickFeature(event)} >
+                {({ active }) => (<a
+                    href="#"
+                    className={classNames(
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm'
+                    )}
+                  >
+                    Featured
+                  </a>
+                )}
+              </Menu.Item>
+            
             {cat.map((item)=>{
                 return <Menu.Item  
                 onClick={(event) => handleMenuItemClick(event, item)} >
@@ -208,6 +271,7 @@ export default function Header({
                 )}
               </Menu.Item>
             })}
+             
           </div>
         </Menu.Items>
       </Transition>

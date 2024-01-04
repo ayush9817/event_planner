@@ -183,6 +183,9 @@ export default function UsersPage() {
               <p className="font-black text-base ">DOJ</p>
               </TableCell>
               <TableCell align="left">
+              <p className="font-black text-base ">Phone</p>
+              </TableCell>
+              <TableCell align="left">
               <p className="font-black text-base ">Status</p>
               </TableCell>
               <TableCell style={{ paddingRight: "30px" }} align="center">
@@ -215,6 +218,8 @@ export default function UsersPage() {
                   <TableCell align="left">{item.username}</TableCell>
                   <TableCell align="left">{item.email}</TableCell>
                   <TableCell align="left">{formatDate(item.date_joined)}</TableCell>
+                  <TableCell align="left">{item.phone_number}</TableCell>
+
                   <TableCell align="left">
                   {item.is_active ? "Active" : "Inactive"}
                   <Switch

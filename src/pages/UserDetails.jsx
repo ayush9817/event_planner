@@ -66,6 +66,28 @@ const UserDetails = () => {
         }
       }
       //console.log(userName[0].username,"userdetails");
+      const handleDelete = async (taskId) => {
+        const token = localStorage.getItem("authtoken");
+      
+        try {
+          // Make a DELETE request to your API to delete the task
+          await axios.delete(`http://127.0.0.1:8000/data/user-missions/${taskId}/`, {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          });
+      
+          // If the deletion is successful, update the userData state
+          setUserData((prevData) => prevData.filter((task) => task.id !== taskId));
+      
+          // Show a success toast
+          toast.success("Task deleted successfully!");
+        } catch (error) {
+          console.error("Error deleting task:", error);
+          // Show an error toast if the deletion fails
+          toast.error("Error deleting task. Please try again.");
+        }
+      };
   return (
       <>
       <UserHeader title={userName && userName[0]?.username} />
@@ -141,7 +163,7 @@ const UserDetails = () => {
   <div className="mt-[60px]">
  <Empty 
         
-        image="data.jpg"
+        image="./data.jpg"
      
         imageStyle={{ height: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }} 
         description={

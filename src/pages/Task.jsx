@@ -14,14 +14,14 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { Info, PlusCircle, Trash2 } from "lucide-react";
+import { Info, PlusCircle, Star, Trash2 } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 //import Button from '@mui/material/Button';
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 //import Typography from '@mui/material/Typography'
 //import * as React from 'react';
-import { Empty } from 'antd';
+import { Empty } from "antd";
 import Button from "@mui/material/Button";
 
 const style = {
@@ -40,7 +40,7 @@ export default function Task() {
   const [open, setOpen] = React.useState(false);
   const [update, setUpdate] = useState(true);
   const triggerRerender = () => {
-    console.log("render task")
+    console.log("render task");
     setUpdate((prev) => !prev);
   };
   const handleOpen = (id) => {
@@ -54,14 +54,14 @@ export default function Task() {
   };
 
   const HtmlTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props}  classes={{ popper: className }} />
+    <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: '#f5f5f9',
-      color: 'rgba(0, 0, 0, 0.87)',
+      backgroundColor: "#f5f5f9",
+      color: "rgba(0, 0, 0, 0.87)",
       maxWidth: 220,
       fontSize: theme.typography.pxToRem(12),
-      border: '1px solid #dadde9',
+      border: "1px solid #dadde9",
     },
   }));
 
@@ -92,6 +92,34 @@ export default function Task() {
     getCat();
   }, [update]);
 
+  const handleMenuItemClick = (event, selectedItem) => {
+    event.preventDefault();
+  //  setIsMenuOpen(false);
+
+  
+    // Handle menu item click logic here
+    //console.log(selectedItem.id, " I am an option");
+    handleToggleFeatured(selectedItem);
+  };
+  const handleToggleFeatured = async (selectedItem) => {
+    try {
+      const res = await axios.patch(
+        `${base_Url}/data/missions/${selectedItem.id}`,
+        { is_featured: !selectedItem.is_featured },
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+      console.log(res.data, "mission updated successfully");
+      setUpdate((prev) => !prev);
+      // Update the local state after the successful update
+      
+    } catch (error) {
+      console.error(error);
+    }
+  };
   async function getMissionD(token) {
     try {
       const res = await axios.get(`${base_Url}data/missions/`, {
@@ -182,174 +210,178 @@ export default function Task() {
         renders={triggerRerender}
       />
 
-{currentRows.length > 0 ? (
-  <>
-
-<TableContainer className="" component={Paper}>
-        <Table
-          sx={{ minWidth: 650 }}
-          aria-label="simple table"
-          // className="mt-5"
-          className="head-padding"
-        >
-          <TableHead style={{ background: "#C8D9ED" }}>
-            <TableRow>
-              <TableCell align="left">
-                <p className="font-black text-base ">Mission Name</p>
-              </TableCell>
-              <TableCell align="left">
-                <p className="font-black text-base ">Category</p>
-              </TableCell>
-              <TableCell align="left">
-                <p className="font-black text-base ">Description</p>
-              </TableCell>
-              <TableCell align="left">
-                <p className="font-black text-base ">Total Tasks</p>
-              </TableCell>
-              <TableCell style={{ paddingRight: "60px" }} align="right">
-                <p className="font-black text-base ">Action</p>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {currentRows.map((row) => (
-              <TableRow
-                key={row.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell
-                  onClick={() => navigate(`/tasks-view/${row.id}`)}
-                  component="th"
-                  scope="row"
-                  style={{ cursor: 'pointer' }}
-                >
-                  {row.name}
-                </TableCell>
-                <TableCell
-                  
-                >
-                  {row.mission_category}
-                </TableCell>
-
-                <TableCell align="left" >
-                  <div className="ml-5">
-                  <HtmlTooltip 
-                    title={
-                      <React.Fragment>
-                        <Typography color="inherit">
-                        {row.name}
-                        </Typography>
-                        {row.description}
-                      </React.Fragment>
-                    }
-                  >
-                    
-                    <Button><Info/></Button>
-                  </HtmlTooltip>
-                  </div>
-                </TableCell>
-
-                <TableCell align="left">
-                  <div className="ml-10">
-                  {row.tasks.length}
-                  </div>
-                  
-                </TableCell>
-                <TableCell align="right">
-                  <div className="mr-3">
-                  <button
-                    style={{}}
-                    onClick={
-                      //navigate(`/addSubtask/${row.id}`);
-                      () => {
-                        handleOpen(row.id);
-                      }
-                    }
-                    className="inner-head-bg  hover:bg-blue-200 text-white font-bold mx-3 py-2 px-4 rounded"
-                  >
-                    <PlusCircle size={18} />
-                  </button>
-
-                  <button
-                    className="inner-head-bg  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => handleDelete(row.id)}
-                  >
-                    <Trash2 size={18} />
-                  </button>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          {/* <div className="bg-white  add-subtask shadow-md rounded px-8 pt-6 pb-8 mb-4"> */}
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-xl font-semibold mb-4 text-center"
-              htmlFor="taskInput"
+      {currentRows.length > 0 ? (
+        <>
+          <TableContainer className="" component={Paper}>
+            <Table
+              sx={{ minWidth: 650 }}
+              aria-label="simple table"
+              // className="mt-5"
+              className="head-padding"
             >
-              Add Subtask
-            </label>
-            <input
-              className=" w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
-              id="taskInput"
-              type="text"
-              placeholder="Enter subtask..."
-              value={task}
-              onChange={handleChange}
+              <TableHead style={{ background: "#C8D9ED" }}>
+                <TableRow>
+                  <TableCell align="left">
+                    <p className="font-black text-base ">Mission Name</p>
+                  </TableCell>
+                  <TableCell align="left">
+                    <p className="font-black text-base ">Category</p>
+                  </TableCell>
+                  <TableCell align="left">
+                    <p className="font-black text-base ">Description</p>
+                  </TableCell>
+                  <TableCell align="left">
+                    <p className="font-black text-base ">Total Tasks</p>
+                  </TableCell>
+                  <TableCell align="left">
+                    <p className="font-black text-base ">Featured</p>
+                  </TableCell>
+                  <TableCell style={{ paddingRight: "60px" }} align="right">
+                    <p className="font-black text-base ">Action</p>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {currentRows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell
+                      onClick={() => navigate(`/tasks-view/${row.id}`)}
+                      component="th"
+                      scope="row"
+                      style={{ cursor: "pointer" }}
+                    >
+                      {row.name}
+                    </TableCell>
+                    <TableCell>{row.mission_category}</TableCell>
+
+                    <TableCell align="left">
+                      <div className="ml-5">
+                        <HtmlTooltip
+                          title={
+                            <React.Fragment>
+                              <Typography color="inherit">
+                                {row.name}
+                              </Typography>
+                              {row.description}
+                            </React.Fragment>
+                          }
+                        >
+                          <Button>
+                            <Info />
+                          </Button>
+                        </HtmlTooltip>
+                      </div>
+                    </TableCell>
+
+                    <TableCell align="left">
+                      <div className="ml-10">{row.tasks.length}</div>
+                    </TableCell>
+                    <TableCell align="left">
+                      {row.is_featured ? (
+                        <div className="ml-7">
+                          <Star onClick={(event) => handleMenuItemClick(event, row)} fill="#532f80" strokeWidth={1} />
+                        </div>
+                      ) : (
+                        <div className="ml-7">
+                          <Star onClick={(event) => handleMenuItemClick(event, row)} fill="white" strokeWidth={1} />
+                        </div>
+                      )}
+                    </TableCell>
+                    <TableCell align="right">
+                      <div className="mr-3">
+                        <button
+                          style={{}}
+                          onClick={
+                            //navigate(`/addSubtask/${row.id}`);
+                            () => {
+                              handleOpen(row.id);
+                            }
+                          }
+                          className="inner-head-bg  hover:bg-blue-200 text-white font-bold mx-3 py-2 px-4 rounded"
+                        >
+                          <PlusCircle size={18} />
+                        </button>
+
+                        <button
+                          className="inner-head-bg  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                          onClick={() => handleDelete(row.id)}
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              {/* <div className="bg-white  add-subtask shadow-md rounded px-8 pt-6 pb-8 mb-4"> */}
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-xl font-semibold mb-4 text-center"
+                  htmlFor="taskInput"
+                >
+                  Add Subtask
+                </label>
+                <input
+                  className=" w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
+                  id="taskInput"
+                  type="text"
+                  placeholder="Enter subtask..."
+                  value={task}
+                  onChange={handleChange}
+                />
+              </div>
+              <div class="submit-btn mt-3 flex justify-evenly">
+                <button
+                  className="inner-head-bg hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  onClick={handleAddTask}
+                >
+                  Add
+                </button>
+                <button
+                  className="inner-head-bg hover:bg-blue-700 text-white font-bold rounded"
+                  onClick={handleClose}
+                >
+                  Cancel
+                </button>
+              </div>
+              {/* </div> */}
+            </Box>
+          </Modal>
+          <div className="flex justify-center items-center mt-5  ">
+            <Pagination
+              count={Math.ceil(mData.length / rowsPerPage)}
+              page={currentPage}
+              onChange={handlePageChange}
+              rowsPerPage={rowsPerPage}
             />
           </div>
-          <div class="submit-btn mt-3 flex justify-evenly">
-            <button
-              className="inner-head-bg hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              onClick={handleAddTask}
-            >
-              Add
-            </button>
-            <button
-              className="inner-head-bg hover:bg-blue-700 text-white font-bold rounded"
-              onClick={handleClose}
-            >
-              Cancel
-            </button>
-          </div>
-          {/* </div> */}
-        </Box>
-      </Modal>
-      <div className="flex justify-center items-center mt-5  ">
-        <Pagination
-          count={Math.ceil(mData.length / rowsPerPage)}
-          page={currentPage}
-          onChange={handlePageChange}
-          rowsPerPage={rowsPerPage}
-        />
-      </div>
-
-  
-  </>
-) : (
-  <div className="mt-[60px]">
-        <Empty 
-        
-        image="datac.jpg"
-     
-        imageStyle={{ height: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }} 
-        description={
-        false
-       }
-     
-     /> 
+        </>
+      ) : (
+        <div className="mt-[60px]">
+          <Empty
+            image="datac.jpg"
+            imageStyle={{
+              height: 500,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            description={false}
+          />
         </div>
-)}
-      
+      )}
     </>
   );
 }

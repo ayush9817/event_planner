@@ -87,6 +87,7 @@ const UserTaskDetail = () => {
                 Authorization: `Token ${token}`,
               },
             });
+            
             console.log(res.data.data, "userDatastatus");
             setUserData(res.data.data);
           } catch (error) {
@@ -101,7 +102,7 @@ const UserTaskDetail = () => {
                 Authorization: `Token ${token}`,
               },
             });
-            console.log(res.data.data.result, "userDatanamestatus");
+            console.log(res.data, "userDatanamestatus");
             setUserName(res.data.data.result);
           } catch (error) {
             console.log(error);
@@ -113,7 +114,7 @@ const UserTaskDetail = () => {
 
       
 
-      {currentRows.length > 0 ? ( 
+      {currentRows?.length > 0 ? ( 
 
         <>
         
@@ -145,7 +146,7 @@ const UserTaskDetail = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {userData?.map((row) => (
+            {currentRows?.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -158,26 +159,62 @@ const UserTaskDetail = () => {
                   {row.name}
                 </TableCell>
                
-                <TableCell align="left">{row.status}</TableCell>
+                <TableCell align="left">{row.user_status}</TableCell>
 
                 <TableCell align="left">
-                        <div className='flex gap-2'>
-                        <div className='border-2  border-indigo-600 h-10 w-10'></div>
-                        <div className='border-2  border-indigo-600 h-10 w-10'></div>
-                        <div className='border-2  border-indigo-600 h-10 w-10'></div>
-                        <div className='border-2  border-indigo-600 h-10 w-10'></div>
-                        </div>
+
+  {row.user_status === 'Completed' ? (
+    <>
+    <div className='flex gap-2'>
+      
+      {row.user_first_pic && 
+      <div className='border-2 border-indigo-600 h-10 w-10'>
+      <img src={`http://127.0.0.1:8000/media/${row.user_first_pic}`} alt="First Pic" className="w-full h-full object-cover" />
+      </div>
+      }
+      
+      
+      {row.user_second_pic && 
+      <div className='border-2 border-indigo-600 h-10 w-10'>
+      <img src={`http://127.0.0.1:8000/media/${row.user_second_pic}`} alt="Second Pic" className="w-full h-full object-cover" />
+      </div>
+      }
+      
+      
+      {row.user_third_pic && 
+       <div className='border-2 border-indigo-600 h-10 w-10'>
+      <img src={`http://127.0.0.1:8000/media/${row.user_third_pic}`} alt="Third Pic" className="w-full h-full object-cover" />
+      </div>
+      }
+      
+      
+      {row.user_fourth_pic && 
+      <div className='border-2 border-indigo-600 h-10 w-10'>
+      <img src={`http://127.0.0.1:8000/media/${row.user_fourth_pic}`} alt="Fourth Pic" className="w-full h-full object-cover" />
+      </div>
+      }
+      
+    </div>
+    </>
+  ) : (
+    <div>-</div>
+  )}
+
                 </TableCell>
 
                 <TableCell align="left" >
-                  <div className="ml-5">
+                 
+
+                  {row.user_status === 'Completed' ? (
+    <>
+     <div className="ml-5">
                   <HtmlTooltip 
                     title={
                       <React.Fragment>
-                        <Typography color="inherit">
+                        {/* <Typography color="inherit">
                         {row.name}
-                        </Typography>
-                        asdgdhfhfhj
+                        </Typography> */}
+                        {row.user_description}
                       </React.Fragment>
                     }
                   >
@@ -185,6 +222,10 @@ const UserTaskDetail = () => {
                     <Button><Info/></Button>
                   </HtmlTooltip>
                   </div>
+    </>
+  ) : (
+    <div className="ml-12">-</div>
+  )}
                 </TableCell>
 
                 <TableCell align="right">
