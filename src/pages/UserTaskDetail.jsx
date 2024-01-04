@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UserHeader from '../components/UserHeader';
 import { toast } from "sonner";
-import { PlusCircle, Trash2 } from "lucide-react";
+import { Info, PlusCircle, Trash2 } from "lucide-react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -14,7 +14,10 @@ import axios from "axios";
 import { useLocation } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
 import { Empty } from 'antd';
-
+import { styled } from '@mui/material/styles';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 const UserTaskDetail = () => {
     const location = useLocation();
     console.log("location",location);
@@ -22,6 +25,18 @@ const UserTaskDetail = () => {
     console.log(receivedData,"state");
     const [userData, setUserData] = useState([]);
     const [userName, setUserName] = useState([]);
+
+    const HtmlTooltip = styled(({ className, ...props }) => (
+      <Tooltip {...props}  classes={{ popper: className }} />
+    ))(({ theme }) => ({
+      [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: '#f5f5f9',
+        color: 'rgba(0, 0, 0, 0.87)',
+        maxWidth: 220,
+        fontSize: theme.typography.pxToRem(12),
+        border: '1px solid #dadde9',
+      },
+    }));
  
     const { userId , missionId } = useParams();
 
@@ -79,7 +94,7 @@ const UserTaskDetail = () => {
           }
         }
         async function getUserName() {
-          
+          const token = localStorage.getItem("authtoken");
           try {
             const res = await axios.get(`http://127.0.0.1:8000/account/users/?id=${userId}`, {
               headers: {
@@ -94,7 +109,7 @@ const UserTaskDetail = () => {
         }
   return (
     <>
-      <UserHeader title={userName && userName[0]?.username} />
+      <UserHeader title={userName && `${userName[0]?.username}/${receivedData}`} />
 
       
 
@@ -118,6 +133,12 @@ const UserTaskDetail = () => {
               <TableCell align="left">
               <p className="font-black text-base ">Status</p>
               </TableCell>
+              <TableCell align="left">
+              <p className="font-black text-base ">Images</p>
+              </TableCell>
+              <TableCell align="left">
+              <p className="font-black text-base ">Description</p>
+              </TableCell>
               <TableCell style={{ paddingRight: "60px" }} align="right">
               <p className="font-black text-base ">Action</p>
               </TableCell>
@@ -138,6 +159,33 @@ const UserTaskDetail = () => {
                 </TableCell>
                
                 <TableCell align="left">{row.status}</TableCell>
+
+                <TableCell align="left">
+                        <div className='flex gap-2'>
+                        <div className='border-2  border-indigo-600 h-10 w-10'></div>
+                        <div className='border-2  border-indigo-600 h-10 w-10'></div>
+                        <div className='border-2  border-indigo-600 h-10 w-10'></div>
+                        <div className='border-2  border-indigo-600 h-10 w-10'></div>
+                        </div>
+                </TableCell>
+
+                <TableCell align="left" >
+                  <div className="ml-5">
+                  <HtmlTooltip 
+                    title={
+                      <React.Fragment>
+                        <Typography color="inherit">
+                        {row.name}
+                        </Typography>
+                        asdgdhfhfhj
+                      </React.Fragment>
+                    }
+                  >
+                    
+                    <Button><Info/></Button>
+                  </HtmlTooltip>
+                  </div>
+                </TableCell>
 
                 <TableCell align="right">
                   <button 

@@ -198,6 +198,9 @@ export default function Task() {
                 <p className="font-black text-base ">Mission Name</p>
               </TableCell>
               <TableCell align="left">
+                <p className="font-black text-base ">Category</p>
+              </TableCell>
+              <TableCell align="left">
                 <p className="font-black text-base ">Description</p>
               </TableCell>
               <TableCell align="left">
@@ -221,6 +224,11 @@ export default function Task() {
                   style={{ cursor: 'pointer' }}
                 >
                   {row.name}
+                </TableCell>
+                <TableCell
+                  
+                >
+                  {row.mission_category}
                 </TableCell>
 
                 <TableCell align="left" >
