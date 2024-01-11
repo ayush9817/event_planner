@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UserHeader from '../components/UserHeader';
 import { toast } from "sonner";
-import { Info, PlusCircle, Trash2 } from "lucide-react";
+import { Info, PlusCircle, Trash2, XCircle } from "lucide-react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -16,9 +16,24 @@ import Pagination from '@mui/material/Pagination';
 import { Empty } from 'antd';
 import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
 const UserTaskDetail = () => {
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    borderRadius: 2,
+    boxShadow: 24,
+    p: 4,
+  };
     const location = useLocation();
     console.log("location",location);
     const receivedData = location.state?.mission_name;
@@ -42,10 +57,49 @@ const UserTaskDetail = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [isDeleting, setIsDeleting] = useState(true);
+    const [open, setOpen] = React.useState(false);
+    const [path,setPath] = useState("");
+    const [id,setId] = useState(null);
+    const [updateUI,setupdateUI] = useState(false);
+    const handleOpen = (id,pictype) =>{
+      setPath(pictype);
+      setId(id)
+      setOpen(true);
+
+    } ;
+    const handleClose = () => setOpen(false);
+  
   
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentRows = userData?.slice(indexOfFirstRow, indexOfLastRow);
+
+    const handleButtonClick = ()=>{
+      const token = localStorage.getItem("authtoken");
+
+          console.log("handle delete");
+          const formData = new FormData();
+          formData.append(path, "");
+          try {
+            const res = axios.patch(`http://127.0.0.1:8000/data/tasks/${id}`,formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Token ${token}`,
+              },
+            }
+            )
+            console.log(res);
+            setupdateUI((prev) => !prev);
+            
+            
+            
+          } catch (error) {
+            console.log(error);
+          }
+           
+    }
 
     const demo =  [
       {
@@ -76,8 +130,9 @@ const UserTaskDetail = () => {
         
         getMissionUserData();
         getUserName();
+        handleClose();
          
-        }, []);
+        }, [updateUI]);
   
         async function getMissionUserData() {
           const token = localStorage.getItem("authtoken");
@@ -148,7 +203,7 @@ const UserTaskDetail = () => {
           <TableBody>
             {currentRows?.map((row) => (
               <TableRow
-                key={row.id}
+                //key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell
@@ -168,30 +223,68 @@ const UserTaskDetail = () => {
     <div className='flex gap-2'>
       
       {row.user_first_pic && 
-      <div className='border-2 border-indigo-600 h-10 w-10'>
-      <img src={`http://127.0.0.1:8000/media/${row.user_first_pic}`} alt="First Pic" className="w-full h-full object-cover" />
+      <div className='relative h-12 w-12 flex items-center justify-center'>
+      <div className='border-2 border-indigo-600 h-10 w-10 relative'>
+        <img src={`http://127.0.0.1:8000/media/${row.user_first_pic}`} alt="First Pic" className="w-full h-full object-cover" />
       </div>
+      {isDeleting && (
+        <div className="absolute bottom-7 left-7">
+          {/* Add your delete button (red cross) */}
+          <XCircle  fill="red" color="white" onClick={()=>{handleOpen(row.id,"first_pic")}}/>
+          
+        </div>
+      )}
+    </div>
       }
       
       
-      {row.user_second_pic && 
-      <div className='border-2 border-indigo-600 h-10 w-10'>
-      <img src={`http://127.0.0.1:8000/media/${row.user_second_pic}`} alt="Second Pic" className="w-full h-full object-cover" />
+      {
+      row.user_second_pic && 
+      <div className='relative h-12 w-12 flex items-center justify-center'>
+      <div className='border-2 border-indigo-600 h-10 w-10 relative'>
+        <img src={`http://127.0.0.1:8000/media/${row.user_second_pic}`} alt="Second Pic" className="w-full h-full object-cover" />
       </div>
+      {isDeleting && (
+        <div className="absolute bottom-7 left-7">
+          {/* Add your delete button (red cross) */}
+          <XCircle  fill="red" color="white" onClick={()=>{handleOpen(row.id,"second_pic")}}/>
+          
+        </div>
+      )}
+    </div>
+      
       }
       
       
       {row.user_third_pic && 
-       <div className='border-2 border-indigo-600 h-10 w-10'>
-      <img src={`http://127.0.0.1:8000/media/${row.user_third_pic}`} alt="Third Pic" className="w-full h-full object-cover" />
+      <div className='relative h-12 w-12 flex items-center justify-center'>
+      <div className='border-2 border-indigo-600 h-10 w-10 relative'>
+        <img src={`http://127.0.0.1:8000/media/${row.user_third_pic}`} alt="Third Pic" className="w-full h-full object-cover" />
       </div>
+      {isDeleting && (
+        <div className="absolute bottom-7 left-7">
+          {/* Add your delete button (red cross) */}
+          <XCircle  fill="red" color="white" onClick={()=>{handleOpen(row.id,"third_pic")}}/>
+          
+        </div>
+      )}
+    </div>
       }
       
       
       {row.user_fourth_pic && 
-      <div className='border-2 border-indigo-600 h-10 w-10'>
-      <img src={`http://127.0.0.1:8000/media/${row.user_fourth_pic}`} alt="Fourth Pic" className="w-full h-full object-cover" />
+      <div className='relative h-12 w-12 flex items-center justify-center'>
+      <div className='border-2 border-indigo-600 h-10 w-10 relative'>
+        <img src={`http://127.0.0.1:8000/media/${row.user_fourth_pic}`} alt="Fourth Pic" className="w-full h-full object-cover" />
       </div>
+      {isDeleting && (
+        <div className="absolute bottom-7 left-7">
+          {/* Add your delete button (red cross) */}
+          <XCircle  fill="red" color="white" onClick={()=>{handleOpen(row.id,"fourth_pic")}}/>
+          
+        </div>
+      )}
+    </div>
       }
       
     </div>
@@ -267,6 +360,39 @@ const UserTaskDetail = () => {
      /> 
         </div>
       )}
+
+          <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography
+                  style={{ fontSize: "30px", marginLeft: "auto" }}
+                  id="modal-modal-title"
+                  variant="h6"
+                  component="h2"
+                >
+                  Are you sure you want to delete?
+                </Typography>
+                
+                <div class="submit-btn mt-3 flex  justify-between">
+                  <button
+                    onClick={()=>{handleButtonClick()}}
+                    className="inner-head-bg hover:bg-blue-700 text-white font-bold rounded"
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={handleClose}
+                    className="inner-head-bg hover:bg-blue-700 text-white font-bold rounded"
+                  >
+                    No
+                  </button>
+                </div>
+              </Box>
+            </Modal>
 
       
       </>
