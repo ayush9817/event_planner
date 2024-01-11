@@ -124,6 +124,7 @@ const UserTaskDetail = () => {
     const handlePageChange = (event, value) => {
       console.log(value);
       setCurrentPage(value);
+      
     };
   
     useEffect(() => {
