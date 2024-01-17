@@ -13,6 +13,7 @@ import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
 import Pagination from '@mui/material/Pagination';
 import { Empty } from 'antd';
+import { base_Url } from '../api';
 
 const UserDetails = () => {
   const [userData, setUserData] = useState([]);
@@ -40,7 +41,7 @@ const UserDetails = () => {
       async function getMissionUserData() {
         const token = localStorage.getItem("authtoken");
         try {
-          const res = await axios.get(`http://127.0.0.1:8000/data/user-missions/?user=${userId}`, {
+          const res = await axios.get(`${base_Url}data/user-missions/?user=${userId}`, {
             headers: {
               Authorization: `Token ${token}`,
             },
@@ -54,7 +55,7 @@ const UserDetails = () => {
       async function getUserName() {
         const token = localStorage.getItem("authtoken");
         try {
-          const res = await axios.get(`http://127.0.0.1:8000/account/users/?id=${userId}`, {
+          const res = await axios.get(`${base_Url}account/users/?id=${userId}`, {
             headers: {
               Authorization: `Token ${token}`,
             },
@@ -71,7 +72,7 @@ const UserDetails = () => {
       
         try {
           // Make a DELETE request to your API to delete the task
-          await axios.delete(`http://127.0.0.1:8000/data/user-missions/${taskId}/`, {
+          await axios.delete(`${base_Url}data/user-missions/${taskId}/`, {
             headers: {
               Authorization: `Token ${token}`,
             },

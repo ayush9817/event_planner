@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { toast } from "sonner";
 import { Download, Upload} from "lucide-react";
+import { base_Url } from "../api";
 
 const style = {
   position: "absolute",
@@ -52,7 +53,7 @@ const AddHeader = ({ title, buttonTitle, id, onClick, Rerender , download }) => 
   
       if (title === "Tasks") {
         const response = await axios.post(
-          "http://127.0.0.1:8000/data/mission-task-upload/",
+          `${base_Url}data/mission-task-upload/`,
           formData,
           {
             headers: {
@@ -63,7 +64,7 @@ const AddHeader = ({ title, buttonTitle, id, onClick, Rerender , download }) => 
         );
       } else {
         const response = await axios.post(
-          "http://127.0.0.1:8000/data/missions-upload/",
+          `${base_Url}data/missions-upload/`,
           formData,
           {
             headers: {

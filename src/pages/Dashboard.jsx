@@ -5,6 +5,7 @@ import { axisClasses } from "@mui/x-charts";
 import { CalendarCheck, Settings2, SquareUser, User } from "lucide-react";
 import DashHeader from "../components/DashHeader";
 import axios from "axios";
+import { base_Url } from "../api";
 
 
 
@@ -18,7 +19,7 @@ export default function Dashboard() {
     const token = localStorage.getItem("authtoken");
     // const navigate = useNavigate();
      try {
-       const res = await axios.get(`http://127.0.0.1:8000/data/missions-count-by-category/`, {
+       const res = await axios.get(`${base_Url}data/missions-count-by-category/`, {
          headers: {
           Authorization: `Token ${token}`,
          },
@@ -53,7 +54,7 @@ export default function Dashboard() {
     const token = localStorage.getItem("authtoken");
    // const navigate = useNavigate();
     try {
-      const res = await axios.get(`http://127.0.0.1:8000/account/users/`, {
+      const res = await axios.get(`${base_Url}account/users/`, {
         headers: {
           Authorization: `Token ${token}`,
         },

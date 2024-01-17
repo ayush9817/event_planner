@@ -36,7 +36,7 @@ export default function UsersPage() {
 
 
     try {
-      const res = await axios.patch(`http://127.0.0.1:8000/account/users/${userId}`,{ is_active: newIsActive } ,{
+      const res = await axios.patch(`${base_Url}account/users/${userId}`,{ is_active: newIsActive } ,{
         headers: {
           Authorization: `Token ${token}`,
         },

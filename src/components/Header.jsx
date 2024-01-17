@@ -110,10 +110,12 @@ export default function Header({
   const [open, setOpen] = React.useState(false);
   const [mission, setMission] = useState("");
   const navigate = useNavigate();
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const [catId, setCatIda] = useState(null);
   const [description, setDescription] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  //const [file,setFile] = useState(null);
+  console.log(image);
 
   const handleMenuItemClickk = (event, item) => {
     // Add your logic here for handling menu item click
@@ -125,37 +127,37 @@ export default function Header({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    handleClose(); 
+    handleClose();
     try {
-    axios.post(
-      `${base_Url}data/missions/`,
-      {
-        name: mission,
-        description:description,
-        mission_type: catId,
-      },
-      {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
+      const formData = new FormData();
+      formData.append('name', mission);
+      formData.append('description', description);
+      formData.append('mission_type', catId);
+  
+      // Check if an image is selected
+      if (image) {
+        formData.append('mission_detail_photo', image);
       }
-    );
-    toast.success("Mission added succesfully");
-    console.log(renders,"render");
-    renders();
-    
-    //navigate("/tasks");
-    
-    console.log("Mission:", mission);
-    // console.log("Category:", category);
-    console.log("Image URL:", image);
-    }
-    catch(err){
+  
+      await axios.post(`${base_Url}data/missions/`, formData, {
+        headers: {
+          'Authorization': `Token ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+  
+      toast.success('Mission added successfully');
+      console.log(renders, 'render');
+      renders();
+  
+      // navigate("/tasks");
+  
+      console.log('Mission:', mission);
+      console.log('Image:', image);
+    } catch (err) {
       console.log(err);
-      toast.error("Failed Adding Mission")
+      toast.error('Failed Adding Mission');
     }
-     
-
   };
   console.log(cat);
 
@@ -372,7 +374,7 @@ export default function Header({
             type="file"
             placeholder="Enter image URL..."
           //  value={image}
-            onChange={(e) => setImage(e.target.value)}
+            onChange={(e) => setImage(e.target.files[0])}
           />
         </div>
         <div className="flex items-center justify-evenly submit-btn">

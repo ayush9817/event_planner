@@ -21,6 +21,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { base_Url } from '../api';
 const UserTaskDetail = () => {
 
   const style = {
@@ -75,14 +76,35 @@ const UserTaskDetail = () => {
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
     const currentRows = userData?.slice(indexOfFirstRow, indexOfLastRow);
 
-    const handleButtonClick = ()=>{
+    const handleDelete = async (id)=>{
+      const token = localStorage.getItem("authtoken");
+
+      try {
+        const res = await axios.delete(
+          `${base_Url}data/tasks/${id}`,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
+        toast.success("Task Deleted successfully");
+        fetchData();
+      } catch (error) {
+        console.log(error);
+      }
+
+    }
+
+    const handleButtonClick = async ()=>{
       const token = localStorage.getItem("authtoken");
 
           console.log("handle delete");
           const formData = new FormData();
           formData.append(path, "");
           try {
-            const res = axios.patch(`http://127.0.0.1:8000/data/tasks/${id}`,formData,
+            const res = await axios.patch(`${base_Url}data/tasks/${id}`,formData,
             {
               headers: {
                 "Content-Type": "multipart/form-data",
@@ -90,9 +112,13 @@ const UserTaskDetail = () => {
               },
             }
             )
-            console.log(res);
-            setupdateUI((prev) => !prev);
+           // console.log(res);
             
+            //setupdateUI((prev) => !prev);
+            
+            fetchData();
+            handleClose();
+            toast.success("Image Deleted successfully");
             
             
           } catch (error) {
@@ -101,49 +127,38 @@ const UserTaskDetail = () => {
            
     }
 
-    const demo =  [
-      {
-        "id": 8,
-        "name": "Afghanistan",
-        "status":"Pending",
-        "mission_name":"Travel the World",
-        "mission": 12,
-        "user": 2
-      },
-      {
-        "id": 9,
-        "name": "Algeria",
-        "status":"Pending",
-        "mission_name":"Travel the World",
-        "mission": 12,
-        "user": 2
-      }
- ]
+
 
   
     const handlePageChange = (event, value) => {
       console.log(value);
       setCurrentPage(value);
-      
+
     };
+    const fetchData = async () => {
+
+      await getMissionUserData();
+      await getUserName();
+      
+  };
   
     useEffect(() => {
         
-        getMissionUserData();
-        getUserName();
-        handleClose();
-         
+      
+
+    fetchData();         
         }, [updateUI]);
   
         async function getMissionUserData() {
+          console.log("fetch");
           const token = localStorage.getItem("authtoken");
           try {
-            const res = await axios.get(`http://127.0.0.1:8000/data/user-completed-tasks-checklist/?user_id=${userId}&mission_id=${missionId}`, {
+            const res = await axios.get(`${base_Url}data/user-completed-tasks-checklist/?user_id=${userId}&mission_id=${missionId}`, {
               headers: {
                 Authorization: `Token ${token}`,
               },
             });
-            
+        
             console.log(res.data.data, "userDatastatus");
             setUserData(res.data.data);
           } catch (error) {
@@ -153,7 +168,7 @@ const UserTaskDetail = () => {
         async function getUserName() {
           const token = localStorage.getItem("authtoken");
           try {
-            const res = await axios.get(`http://127.0.0.1:8000/account/users/?id=${userId}`, {
+            const res = await axios.get(`${base_Url}account/users/?id=${userId}`, {
               headers: {
                 Authorization: `Token ${token}`,
               },

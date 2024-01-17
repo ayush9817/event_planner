@@ -20,12 +20,13 @@ export default function Root() {
         <div className="flex flex-col h-screen bg-white shadow w-60">
           <div className="">
             <div className="flex items-center">
-              <div class="sidebar-logo flex justify-center items-center h-[72px] ">
-                <h2 className="text-2xl  font-bold">List Tracker</h2>
+              <div className="sidebar-logo flex gap-2 justify-center items-center h-[72px] ">
+                
+                <img src="/logo.png" alt="List Tracker Logo" className="h-[40px]" />
               </div>
             </div>
             <div className="flex-1">
-              <ul className=" pb-4 space-y-1 text-sm side-menu border-t-2">
+              <ul className=" pb-4 space-y-1 text-sm side-menu border-t-[1px]">
                 <Link to="/dashboard">
                   <li
                     onClick={() => setActive("home")}
