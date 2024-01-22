@@ -121,7 +121,7 @@ export default function Dashboard() {
       <div className=" w-full ">
       <div className="ml-[180px] ">
 
-      {xAxisData.length > 0 ? (
+      {xAxisData?.length > 0 ? (
             <BarChart
               xAxis={[{ scaleType: "band", data: xAxisData }]}
               series={[{ data: seriesData }]}

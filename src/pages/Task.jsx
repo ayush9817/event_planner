@@ -125,6 +125,7 @@ export default function Task() {
       const res = await axios.get(`${base_Url}data/missions/`, {
         headers: {
           Authorization: `Token ${token}`,
+          
         },
       });
       console.log(res.data.data.result, "userData");
