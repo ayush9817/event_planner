@@ -241,7 +241,7 @@ const UserTaskDetail = () => {
       {row.user_first_pic && 
       <div className='relative h-12 w-12 flex items-center justify-center'>
       <div className='border-2 border-indigo-600 h-10 w-10 relative'>
-        <img src={`http://127.0.0.1:8000/media/${row.user_first_pic}`} alt="First Pic" className="w-full h-full object-cover" />
+        <img src={`http://18.188.235.241:81/media/${row.user_first_pic}`} alt="First Pic" className="w-full h-full object-cover" />
       </div>
       {isDeleting && (
         <div className="absolute bottom-7 left-7">
@@ -258,7 +258,7 @@ const UserTaskDetail = () => {
       row.user_second_pic && 
       <div className='relative h-12 w-12 flex items-center justify-center'>
       <div className='border-2 border-indigo-600 h-10 w-10 relative'>
-        <img src={`http://127.0.0.1:8000/media/${row.user_second_pic}`} alt="Second Pic" className="w-full h-full object-cover" />
+        <img src={`http://18.188.235.241:81/media/${row.user_second_pic}`} alt="Second Pic" className="w-full h-full object-cover" />
       </div>
       {isDeleting && (
         <div className="absolute bottom-7 left-7">
@@ -275,7 +275,7 @@ const UserTaskDetail = () => {
       {row.user_third_pic && 
       <div className='relative h-12 w-12 flex items-center justify-center'>
       <div className='border-2 border-indigo-600 h-10 w-10 relative'>
-        <img src={`http://127.0.0.1:8000/media/${row.user_third_pic}`} alt="Third Pic" className="w-full h-full object-cover" />
+        <img src={`http://18.188.235.241:81/media/${row.user_third_pic}`} alt="Third Pic" className="w-full h-full object-cover" />
       </div>
       {isDeleting && (
         <div className="absolute bottom-7 left-7">
@@ -291,7 +291,7 @@ const UserTaskDetail = () => {
       {row.user_fourth_pic && 
       <div className='relative h-12 w-12 flex items-center justify-center'>
       <div className='border-2 border-indigo-600 h-10 w-10 relative'>
-        <img src={`http://127.0.0.1:8000/media/${row.user_fourth_pic}`} alt="Fourth Pic" className="w-full h-full object-cover" />
+        <img src={`http://18.188.235.241:81/media/${row.user_fourth_pic}`} alt="Fourth Pic" className="w-full h-full object-cover" />
       </div>
       {isDeleting && (
         <div className="absolute bottom-7 left-7">
