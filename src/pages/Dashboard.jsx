@@ -39,8 +39,11 @@ export default function Dashboard() {
         label: "Missions",
       },
     ],
-    width: 1100,
-    height: 500,
+    width: 745,
+    height: 330,
+    color: '#fdb462',
+    colors:['#368818']
+
 
     // sx: {
     //   [`.${axisClasses.left} .${axisClasses.label}`]: {
@@ -89,7 +92,7 @@ export default function Dashboard() {
     
     <>
       <DashHeader title={"Dashboard"} />
-      <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3 p-4">
+      <div className="grid grid-cols-1 gap-6 mb-0 lg:grid-cols-3 p-4">
         <div className="min-height bg-blue w-full bg-gray rounded-lg flex justify-between items-center">
           <div className="text-sm font-medium text-gray truncate">
             Total users
@@ -118,7 +121,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className=" w-full ">
+      <div className=" w-full  ">
       <div className="ml-[180px] ">
 
       {xAxisData?.length > 0 ? (
@@ -126,6 +129,7 @@ export default function Dashboard() {
               xAxis={[{ scaleType: "band", data: xAxisData }]}
               series={[{ data: seriesData }]}
               {...chartSetting}
+             
             />
           ) : (
             <div>No data available for the chart.</div>

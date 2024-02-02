@@ -165,12 +165,13 @@ currentRows.length > 0 ? (
                     </TableCell>
                     <TableCell align="right">
                       <Button
+                        className="inner-head-bg hover:bg-green-700"
                         onClick={() => handleViewButton(row.id)}
                         title="View Missions"
                       />
                       <button
                         onClick={() => handleSwitch(row.id, token, false)}
-                        className="inner-head-bg  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4"
+                        className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4"
                       >
                         {activeTab === "active" ? "Inactive" : ""}
                       </button>
@@ -239,15 +240,16 @@ currentRows.length > 0 ? (
                     <TableCell align="right">
                       {activeTab === "active" ? (
                         <Button
+                        className="inner-head-bg hover:bg-green-700"
                           onClick={handleViewButton}
-                          title="View Mission"
+                          title="View Missionse"
                         />
                       ) : (
                         <></>
                       )}
                       <button
                         onClick={(e) => handleSwitch(row.id, token, true)}
-                        className="inner-head-bg hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4"
+                        className="inner-head-bg hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4"
                       >
                         Active
                       </button>

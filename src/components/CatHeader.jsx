@@ -63,7 +63,7 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
       <div className="mx-3 ml-auto">
         <button
           onClick={handleOpen}
-          className={`${"bg-blue-500 text-white"} px-4 py-2 rounded-md ml-auto`}
+          className={`${"bg-orange-400 hover:bg-orange-500 text-white"} px-4 py-2 rounded-md ml-auto`}
         >
           Add Category
         </button>
@@ -83,7 +83,7 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
         <button
           className={`${
             activeTab === "inactive"
-              ? "bg-[#FF0000] text-white"
+              ? "bg-orange-500 text-white"
               : "bg-white text-dark "
           } px-4 py-1 rounded-r-md h-10`}
           onClick={() => handleTabClick("inactive")}
@@ -133,13 +133,13 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
           <div class="submit-btn mt-3 flex justify-evenly">
             <button
               onClick={() => saveCat(token)}
-              className="inner-head-bg hover:bg-blue-700 text-white font-bold rounded"
+              className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
             >
               Save
             </button>
             <button
               onClick={handleClose}
-              className="inner-head-bg hover:bg-blue-700 text-white font-bold rounded"
+              className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
             >
               Cancel
             </button>

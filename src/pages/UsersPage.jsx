@@ -223,7 +223,7 @@ export default function UsersPage() {
                   <TableCell align="left">
                   {item.is_active ? "Active" : "Inactive"}
                   <Switch
-                  
+                  color="warning"
       checked={item.is_active }
       onChange={()=>handleChange(item.id,item.is_active)}
       inputProps={{ 'aria-label': 'controlled' }}

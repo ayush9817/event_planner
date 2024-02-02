@@ -98,13 +98,13 @@ const AddHeader = ({ title, buttonTitle, id, onClick, Rerender , download }) => 
           <div className="relative top-input flex gap-2">
           <button
               onClick={download}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-2 rounded"
+              className="bg-orange-400 hover:bg-orange-500 text-white font-semibold py-2 px-2 rounded"
             >
               <Download />
             </button>
             <button
               onClick={handleOpen}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-2 rounded"
+              className="bg-orange-400 hover:bg-orange-500 text-white font-semibold py-2 px-2 rounded"
             >
               <Upload />
             </button>
@@ -140,13 +140,13 @@ const AddHeader = ({ title, buttonTitle, id, onClick, Rerender , download }) => 
                 <div class="submit-btn mt-3 flex gap-2">
                   <button
                     onClick={()=>{handleButtonClick()}}
-                    className="inner-head-bg hover:bg-blue-700 text-white font-bold rounded"
+                    className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
                   >
                     Save
                   </button>
                   <button
                     onClick={handleButtonClick}
-                    className="inner-head-bg hover:bg-blue-700 text-white font-bold rounded"
+                    className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
                   >
                     Cancel
                   </button>

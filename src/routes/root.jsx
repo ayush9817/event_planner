@@ -30,9 +30,9 @@ export default function Root() {
                 <Link to="/dashboard">
                   <li
                     onClick={() => setActive("home")}
-                    className={`rounded-sm ${
-                      active === "home" ? "bg-[#164863] text-white" : ""
-                    }`}
+                    className={`rounded-sm hover:bg-[#368818] ${
+                      active === "home" ? "bg-[#368818] text-white" : ""
+                    } `}
                   >
                     <p className="flex items-center p-2 space-x-3 rounded-md">
                       <svg
@@ -58,7 +58,7 @@ export default function Root() {
                   <li
                     onClick={() => setActive("mission")}
                     className={`rounded-sm ${
-                      active === "mission" ? "bg-[#164863] text-white" : ""
+                      active === "mission" ? "bg-[#368818] text-white" : ""
                     }`}
                   >
                     <p
@@ -75,7 +75,7 @@ export default function Root() {
                   <li
                     onClick={() => setActive("users")}
                     className={`rounded-sm ${
-                      active === "users" ? "bg-[#164863] text-white" : ""
+                      active === "users" ? "bg-[#368818] text-white" : ""
                     }`}
                   >
                     <p
@@ -92,7 +92,7 @@ export default function Root() {
                   <li
                     onClick={() => setActive("config")}
                     className={`rounded-sm ${
-                      active === "config" ? "bg-[#164863] text-white" : ""
+                      active === "config" ? "bg-[#368818] text-white" : ""
                     }`}
                   >
                     <p

@@ -65,6 +65,8 @@ export default function Header({
   const handleMenuItemClick = (event, selectedItem) => {
     event.preventDefault();
     setIsMenuOpen(false);
+    setMissionType(`${selectedItem.mission_type}`);
+    console.log(selectedItem,"hi hello");
 
   
     // Handle menu item click logic here
@@ -74,6 +76,7 @@ export default function Header({
   const handleMenuItemClickAll = async (event) => {
     event.preventDefault();
     setIsMenuOpen(false);
+    setMissionType('All');
     try {
       const res = await axios.get(
         `${base_Url}/data/missions/`,
@@ -91,7 +94,9 @@ export default function Header({
   };
   const handleMenuItemClickFeature = async (event) => {
     event.preventDefault();
+    
     setIsMenuOpen(false);
+    setMissionType('Featured');
     try {
       const res = await axios.get(
         `${base_Url}/data/missions/?is_featured=true`,
@@ -114,6 +119,7 @@ export default function Header({
   const [catId, setCatIda] = useState(null);
   const [description, setDescription] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [missionType,setMissionType] = useState('Categories');
   //const [file,setFile] = useState(null);
   console.log(image);
 
@@ -181,7 +187,7 @@ export default function Header({
               <div className="flex justify-center items-center gap-2 ">
               <button
               onClick={download}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-2 rounded"
+              className="bg-orange-400 hover:bg-blue-500 text-white font-semibold py-2 px-2 rounded"
             >
               <Download />
             </button>
@@ -204,14 +210,14 @@ export default function Header({
             <option value="filter2">Filter 2</option>
           </select> */}
           {title === "Mission" ? (
-            <div style={{ backgroundColor: "#164863" }}>
+            <div style={{ backgroundColor: "#368818" }}>
               <Menu as="div" className="relative inline-block text-left">
       <div >
         <Menu.Button 
         className="flex w-full justify-center align-center gap-x-1.5 rounded-md bg-white px-3.5 py-2 text-m font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 "
         onClick={() => setIsMenuOpen(!isMenuOpen)} 
         >
-          Categories
+         {`${missionType}`}
           {isMenuOpen ? (
             <ChevronUpIcon className="-mr-1 pt-0.5 h-6 w-7 text-gray-800" aria-hidden="true" />
           ) : (
@@ -293,7 +299,7 @@ export default function Header({
             <>
               <button
                 onClick={handleOpen}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+                className="bg-orange-400 hover:bg-orange-500 text-white font-semibold py-2 px-4 rounded"
               >
                 Add {buttonTitle}
               </button>
@@ -379,12 +385,12 @@ export default function Header({
         </div>
         <div className="flex items-center justify-evenly submit-btn">
           <button
-            className="inner-head-bg hover:bg-blue-700 text-white font-bold rounded"
+            className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
             type="submit"
           >
             Submit
           </button>
-          <button  onClick={handleClose} class="g-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+          <button  onClick={handleClose} class="g-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
             Cancel
             </button>
         </div>

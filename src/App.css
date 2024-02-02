@@ -1,5 +1,5 @@
 .inner-head-bg {
-  background-color: #164863;
+  background-color: #368818;
 }
 .top-input input {
   background: #fff;
@@ -20,11 +20,12 @@
   padding: 10px;
 }
 .side-menu li {
+  height: 57px;
   border-bottom: 1px solid #ededed;
   padding: 6px 1px;
 }
 .side-menu li:hover {
-  background: #164863;
+  background: #368818;
 }
 .side-menu li:hover p {
   color: #fff;

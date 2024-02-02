@@ -5,6 +5,7 @@ export default {
     extend: {
       backgroundColor: {
         'custom-color': '#164863',
+        'greeny':'#4ba92a',
         'custom-color-dark': '#0f3b4e',
       },
     },
