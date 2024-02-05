@@ -122,7 +122,7 @@ const AddHeader = ({ title, buttonTitle, id, onClick, Rerender , download }) => 
                   variant="h6"
                   component="h2"
                 >
-                  Add CSV
+                  Add XLS
                 </Typography>
                 <div className="pb-3 pt-5">
                   <input

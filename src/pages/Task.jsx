@@ -283,11 +283,11 @@ export default function Task() {
                     <TableCell align="left">
                       {row.is_featured ? (
                         <div className="ml-7">
-                          <Star onClick={(event) => handleMenuItemClick(event, row)} fill="#FFD700" strokeWidth={1} />
+                          <Star className="cursor-pointer" onClick={(event) => handleMenuItemClick(event, row)} fill="#FFD700" strokeWidth={1} />
                         </div>
                       ) : (
                         <div className="ml-7">
-                          <Star onClick={(event) => handleMenuItemClick(event, row)} fill="white" strokeWidth={1} />
+                          <Star className="cursor-pointer" onClick={(event) => handleMenuItemClick(event, row)} fill="white" strokeWidth={1} />
                         </div>
                       )}
                     </TableCell>

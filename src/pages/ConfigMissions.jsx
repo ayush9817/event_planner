@@ -120,23 +120,23 @@ export default function ConfigMissions() {
   return (
     <>
       {/* <Header  /> */}
-      <AddHeader title={"Category Missions"} buttonTitle={"CSV"} id={catId} Rerender={triggerRerender} download={convertJsonToExcel}/>
+      <AddHeader title={"Category Missions"} buttonTitle={"XLS"} id={catId} Rerender={triggerRerender} download={convertJsonToExcel}/>
 
       {currentRows.length > 0 ? ( 
         
         <>
         <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table head-padding">
           <TableHead style={{ background: "#C8D9ED" }}>
-            <TableRow>
+            <TableRow className=" flex ">
               <TableCell>
               <p className="font-black text-base ">Tasks</p>
                 </TableCell>
                 <TableCell>
-              <p className="font-black text-base ">Description</p>
+              <p className="font-black text-base ml-[300px] ">Description</p>
                 </TableCell>
               <TableCell >
-              <p className="font-black text-base ">Subtask Count</p>
+              <p className="font-black text-base  ">Subtask Count</p>
                 </TableCell>
             </TableRow>
           </TableHead>
@@ -145,13 +145,14 @@ export default function ConfigMissions() {
               <TableRow
                 key={row.name}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                 style={{height:3}}
               >
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
 
                 <TableCell align="left">
-                  <div  className="ml-5">
+                  <div  className="ml-[320px]">
                   <HtmlTooltip
                     title={
                       <React.Fragment>

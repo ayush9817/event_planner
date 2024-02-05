@@ -139,7 +139,7 @@ currentRows.length > 0 ? (
   <>
           <TableContainer component={Paper}>
             <Table
-              className=" table head-padding"
+              className="table head-padding"
               sx={{ minWidth: 650 }}
               aria-label="simple table"
             >
@@ -150,8 +150,8 @@ currentRows.length > 0 ? (
                     <p className="font-black text-base ">Name</p>
                     {" "}
                   </TableCell>
-                  <TableCell style={{ paddingRight: "100px" }} align="right">
-                  <p className="font-black text-base mr-8 ">Action</p>
+                  <TableCell  style={{ paddingRight: "100px" }} align="right">
+                  <p className="font-black text-base mr-2 ">Action</p>
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -165,13 +165,8 @@ currentRows.length > 0 ? (
                       {row.mission_type}
                     </TableCell>
                     <TableCell  align="right">
-                      <div className="flex justify-center items-center gap-2 ml-[650px]">
-                      <button
-                          className="inner-head-bg  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                          onClick={() => {}}
-                        >
-                          <Trash2 size={18} />
-                      </button>
+                      <div className="flex justify-center items-center gap-2 ml-[690px]">
+                     
                       <Button
                         className="inner-head-bg hover:bg-green-700"
                         onClick={() => handleViewButton(row.id)}
