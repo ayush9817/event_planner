@@ -88,7 +88,7 @@ export default function Login() {
           <div className="mt-6">
             <button
               onClick={(e) => handleLogin(e)}
-              className={`w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-custom-color rounded-md hover:bg-custom-color-dark focus:outline-none focus:bg-custom-color ${dis?'cursor-not-allowed':''} `}
+              className={`w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform inner-head-bg rounded-md hover:bg-green-700 focus:outline-none focus:bg-green-800 ${dis?'cursor-not-allowed':''} `}
             >
               Login
             </button>
