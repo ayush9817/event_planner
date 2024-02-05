@@ -161,8 +161,8 @@ export default function Header({
       console.log('Mission:', mission);
       console.log('Image:', image);
     } catch (err) {
-      console.log(err);
-      toast.error('Failed Adding Mission');
+      console.log(err,"sumbmit");
+      toast.error(`${err.response.data.message}`);
     }
   };
   console.log(cat);

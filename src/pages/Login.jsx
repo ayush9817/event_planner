@@ -5,6 +5,7 @@ import { base_Url } from "../api";
 import { toast } from "sonner";
 export default function Login() {
   const navigate = useNavigate();
+  const [dis,setDis] = useState(false);
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -20,6 +21,7 @@ export default function Login() {
 
   async function handleLogin(e) {
     e.preventDefault();
+    setDis(true);
     console.log("hit");
     try {
       const res = await axios.post(`${base_Url}/account/login/`, credentials, {
@@ -32,8 +34,10 @@ export default function Login() {
       toast.success("Login successfull");
       navigate("/");
     } catch (error) {
+      
       console.log(error);
-      toast.error("Invalid credentials");
+      toast.error("Invalid Password or Username");
+      setDis(false);
     }
   }
   console.log(credentials, "cred");
@@ -84,7 +88,7 @@ export default function Login() {
           <div className="mt-6">
             <button
               onClick={(e) => handleLogin(e)}
-              className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-custom-color rounded-md hover:bg-custom-color-dark focus:outline-none focus:bg-custom-color"
+              className={`w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-custom-color rounded-md hover:bg-custom-color-dark focus:outline-none focus:bg-custom-color ${dis?'cursor-not-allowed':''} `}
             >
               Login
             </button>

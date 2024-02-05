@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Pagination from '@mui/material/Pagination';
 import { Empty } from 'antd';
+import { Trash2 } from "lucide-react";
 export default function Config() {
   const [update,setUpdate] = useState(true);
   const triggerRerender = () => {
@@ -150,7 +151,7 @@ currentRows.length > 0 ? (
                     {" "}
                   </TableCell>
                   <TableCell style={{ paddingRight: "100px" }} align="right">
-                  <p className="font-black text-base ">Action</p>
+                  <p className="font-black text-base mr-8 ">Action</p>
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -163,7 +164,14 @@ currentRows.length > 0 ? (
                     <TableCell component="th" scope="row">
                       {row.mission_type}
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell  align="right">
+                      <div className="flex justify-center items-center gap-2 ml-[650px]">
+                      <button
+                          className="inner-head-bg  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                          onClick={() => {}}
+                        >
+                          <Trash2 size={18} />
+                      </button>
                       <Button
                         className="inner-head-bg hover:bg-green-700"
                         onClick={() => handleViewButton(row.id)}
@@ -171,10 +179,11 @@ currentRows.length > 0 ? (
                       />
                       <button
                         onClick={() => handleSwitch(row.id, token, false)}
-                        className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4"
+                        className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded "
                       >
                         {activeTab === "active" ? "Inactive" : ""}
                       </button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -195,9 +204,9 @@ currentRows.length > 0 ? (
   <div className="mt-[60px]">
        <Empty 
         
-        image="data.jpg"
+        //image="data.jpg"
      
-        imageStyle={{ height: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }} 
+        //imageStyle={{ height: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }} 
         description={
         false
        }

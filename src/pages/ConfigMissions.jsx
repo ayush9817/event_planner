@@ -193,9 +193,9 @@ export default function ConfigMissions() {
         <div className="mt-[60px]">
         <Empty 
         
-        image="data.jpg"
+        //image="data.jpg"
      
-        imageStyle={{ height: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }} 
+        //imageStyle={{ height: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }} 
         description={
         false
        }

@@ -372,13 +372,13 @@ export default function Task() {
       ) : (
         <div className="mt-[60px]">
           <Empty
-            image="datac.jpg"
-            imageStyle={{
-              height: 500,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            // image="datac.jpg"
+            // imageStyle={{
+            //   height: 500,
+            //   display: "flex",
+            //   alignItems: "center",
+            //   justifyContent: "center",
+            // }}
             description={false}
           />
         </div>

@@ -98,7 +98,7 @@ export default function Dashboard() {
             Total users
             <div className="mt-1 text-3xl font-semibold text-gray">{userData.length}</div>
           </div>
-          <div className="home-icon">
+          <div className="home-icon ">
             <User size={35} />
           </div>
         </div>
