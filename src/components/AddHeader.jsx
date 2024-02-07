@@ -127,7 +127,7 @@ const AddHeader = ({ title, buttonTitle, id, onClick, Rerender , download }) => 
                 <div className="pb-3 pt-5">
                   <input
                     // onChange={(e) => setCatValue(e.target.value)}
-
+                    accept=".xls, .xlsx" 
                     onChange={handleFileChange}
                     className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
                     type="file"

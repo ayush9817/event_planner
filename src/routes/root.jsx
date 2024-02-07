@@ -26,7 +26,7 @@ export default function Root() {
               </div>
             </div>
             <div className="flex-1">
-              <ul className=" pb-4 space-y-1 text-sm side-menu border-t-[1px]">
+              <ul className="   text-sm side-menu border-t-[1px]">
                 <Link to="/dashboard">
                   <li
                     onClick={() => setActive("home")}
@@ -109,7 +109,7 @@ export default function Root() {
                     localStorage.removeItem("authtoken");
                     navigate("/login");
                   }}
-                  className="rounded-sm"
+                  className="rounded-sm "
                 >
                   <p className="flex items-center p-2 space-x-3 rounded-md">
                     <svg
@@ -133,7 +133,7 @@ export default function Root() {
             </div>
           </div>
         </div>
-        <div className="container mx-auto">
+        <div className="container mx-auto w-full">
           {/* <div className="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
           <div className="w-full px-4 py-5 bg-white rounded-lg shadow">
             <div className="text-sm font-medium text-gray-500 truncate">

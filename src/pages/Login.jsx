@@ -23,6 +23,7 @@ export default function Login() {
     e.preventDefault();
     setDis(true);
     console.log("hit");
+    if(credentials.username && credentials.password){
     try {
       const res = await axios.post(`${base_Url}/account/login/`, credentials, {
         headers: {
@@ -36,7 +37,11 @@ export default function Login() {
     } catch (error) {
       
       console.log(error);
-      toast.error("Invalid Password or Username");
+      toast.error("Invalid Username or Password ");
+      setDis(false);
+    }}
+    else{
+      toast.error("Require Password or Username");
       setDis(false);
     }
   }
@@ -61,6 +66,7 @@ export default function Login() {
               name="username"
               value={credentials.username}
               onChange={handleInputChange}
+              required={true}
               placeholder="Username"
               className="block w-full px-4 py-2 mt-2 text-custom-color bg-white border rounded-md focus:border-custom-color focus:ring-custom-color focus:outline-none focus:ring focus:ring-opacity-40"
             />
@@ -78,6 +84,7 @@ export default function Login() {
               name="password"
               value={credentials.password}
               onChange={handleInputChange}
+              required={true}
               placeholder="Password"
               className="block w-full px-4 py-2 mt-2 text-custom-color bg-white border rounded-md focus:border-custom-color focus:ring-custom-color focus:outline-none focus:ring focus:ring-opacity-40"
             />

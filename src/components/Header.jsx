@@ -191,15 +191,18 @@ export default function Header({
             >
               <Download />
             </button>
+              <div className="bg-white rounded-md  px-1 focus:outline-none focus:ring focus:border-blue-500 flex justify-center items-center">
               <input
                 onChange={(e) => setSearch(e.target.value)}
                 type="text"
                 placeholder="Search..."
-                className="bg-gray-700 rounded-md py-1 px-3 focus:outline-none focus:ring focus:border-blue-500"
+                className="outline-none"
+               // className="bg-gray-700 rounded-md py-1 px-3 focus:outline-none focus:ring focus:border-blue-500"
               />
-              <button className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200">
+              <button className=" text-gray-400 hover:text-gray-200">
                 <Search />
               </button>
+              </div>
               </div>
 
             </div>
@@ -327,6 +330,7 @@ export default function Header({
             type="text"
             placeholder="Enter mission..."
             value={mission}
+            maxLength={25}
             onChange={(e) => setMission(e.target.value)}
           />
         </div>
@@ -342,6 +346,7 @@ export default function Header({
           id="descriptionInput"
           placeholder="Enter description..."
           value={description}
+          maxLength={50}
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
