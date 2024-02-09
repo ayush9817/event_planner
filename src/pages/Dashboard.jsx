@@ -121,8 +121,8 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className=" w-full  ">
-      <div className="ml-[180px] ">
+      <div className=" w-full flex justify-center  ">
+      {/* <div className="ml-[180px] "> */}
 
       {xAxisData?.length > 0 ? (
             <BarChart
@@ -136,7 +136,7 @@ export default function Dashboard() {
           )}
         
        
-      </div>
+      {/* </div> */}
       </div>
     </div>
   );
