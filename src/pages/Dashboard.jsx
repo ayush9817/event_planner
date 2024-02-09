@@ -121,7 +121,8 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className=" w-full flex justify-center  ">
+      
+      <div className=" w-full flex justify-center h-[calc(100vh-230px)] items-center ">
       {/* <div className="ml-[180px] "> */}
 
       {xAxisData?.length > 0 ? (
