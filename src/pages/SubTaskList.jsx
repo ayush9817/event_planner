@@ -23,7 +23,7 @@ export default function SubTaskList() {
   const [update, setUpdate] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -137,13 +137,13 @@ export default function SubTaskList() {
         <>
           <div className="flex-col justify-between items-center h-full">
             <div style={{ flex: 1 }}>
-              <TableContainer component={Paper}>
+              <TableContainer className="max-h-[calc(100vh-140px)] overflow-auto" component={Paper}>
                 <Table
                   className="head-padding"
                   sx={{ minWidth: 650 }}
                   aria-label="simple table"
                 >
-                  <TableHead style={{ background: "#C8D9ED" }}>
+                  <TableHead style={{ background: "#C8D9ED",position:'sticky',top:0,zIndex:5 }}>
                     <TableRow>
                       <TableCell>
                         <p className="font-black text-base ">Task Name</p>

@@ -170,7 +170,7 @@ export default function Header({
 
   
   return (
-    <header className="inner-head-bg bg-stone-200 text-white p-4 h-[72px] ">
+    <header className="inner-head-bg bg-stone-200 text-white p-4 h-[72px] z-50 relative ">
       <div className="container mx-auto flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold my-auto">{title}</h1>
@@ -238,8 +238,8 @@ export default function Header({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-[128px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1">
+        <Menu.Items className="absolute right-0  mt-2 w-[128px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-1  ">
           <Menu.Item  
                 onClick={(event) => handleMenuItemClickAll(event)} >
                 {({ active }) => (<a

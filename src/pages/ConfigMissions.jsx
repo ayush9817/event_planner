@@ -26,7 +26,7 @@ export default function ConfigMissions() {
   const { catId } = useParams();
   const [update,setUpdate] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -125,9 +125,9 @@ export default function ConfigMissions() {
       {currentRows.length > 0 ? ( 
         
         <>
-        <TableContainer component={Paper}>
+        <TableContainer className="max-h-[calc(100vh-140px)] overflow-auto" component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table" className="table head-padding">
-          <TableHead style={{ background: "#C8D9ED" }}>
+          <TableHead  style={{ background: "#C8D9ED",position:'sticky',top:0,zIndex:5 }}>
             <TableRow className=" flex ">
               <TableCell>
               <p className="font-black text-base ">Tasks</p>

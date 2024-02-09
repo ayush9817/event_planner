@@ -26,14 +26,14 @@ export default function Config() {
   const [activeCatData, setActiveCatData] = useState([]);
   const [inActiveCatData, setInActiveCatData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = activeCatData.slice(indexOfFirstRow, indexOfLastRow);
 
   const [currentPagei, setCurrentPagei] = useState(1);
-  const [rowsPerPagei, setRowsPerPagei] = useState(5);
+  const [rowsPerPagei, setRowsPerPagei] = useState(10);
 
   const indexOfLastRowi = currentPagei * rowsPerPagei;
   const indexOfFirstRowi = indexOfLastRowi - rowsPerPagei;
@@ -137,13 +137,13 @@ export default function Config() {
 
 currentRows.length > 0 ? (
   <>
-          <TableContainer component={Paper}>
+          <TableContainer className="max-h-[calc(100vh-140px)] overflow-auto" component={Paper}>
             <Table
               className="table head-padding"
               sx={{ minWidth: 650 }}
               aria-label="simple table"
             >
-              <TableHead style={{ background: "#C8D9ED" }}>
+              <TableHead style={{ background: "#C8D9ED",position:'sticky',top:0,zIndex:5 }}>
                 <TableRow>
                   <TableCell>
                     {" "}
@@ -165,7 +165,7 @@ currentRows.length > 0 ? (
                       {row.mission_type}
                     </TableCell>
                     <TableCell  align="right">
-                      <div className="flex justify-center items-center gap-2 ml-[690px]">
+                      <div className="flex justify-center items-center gap-2 ml-[690px] 2xl:ml-[1090px]">
                      
                       <Button
                         className="inner-head-bg hover:bg-green-700"
@@ -216,13 +216,13 @@ currentRows.length > 0 ? (
         currentRowsi.length > 0 ? (
 
           <>
-          <TableContainer component={Paper}>
+          <TableContainer className="max-h-[calc(100vh-140px)] overflow-auto" component={Paper}>
             <Table
               className="table-striped "
               sx={{ minWidth: 650 }}
               aria-label="simple table"
             >
-              <TableHead>
+              <TableHead style={{ background: "#C8D9ED",position:'sticky',top:0,zIndex:5 }}>
                 <TableRow>
                   <TableCell>
                   <p className="font-black text-base ">Category Name</p>

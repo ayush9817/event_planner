@@ -74,7 +74,7 @@ export default function Task() {
   const [userId, setUserId] = useState("");
   //const handleClose = () => setOpen(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -213,14 +213,15 @@ export default function Task() {
 
       {currentRows.length > 0 ? (
         <>
-          <TableContainer className="" component={Paper}>
+          <TableContainer className="max-h-[calc(100vh-140px)] overflow-auto" component={Paper}>
             <Table
               sx={{ minWidth: 650 }}
               aria-label="simple table"
+
               // className="mt-5"
-              className="head-padding"
+              className="head-padding "
             >
-              <TableHead style={{ background: "#C8D9ED" }}>
+              <TableHead  style={{ background: "#C8D9ED",position:'sticky',top:0,zIndex:5 }}>
                 <TableRow>
                   <TableCell align="left">
                     <p className="font-black text-base ">Mission Name</p>
@@ -242,7 +243,7 @@ export default function Task() {
                   </TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody  >
                 {currentRows.map((row) => (
                   <TableRow
                     key={row.id}
@@ -260,7 +261,7 @@ export default function Task() {
 
                     <TableCell align="left">
                       <div className="ml-5">
-                        <HtmlTooltip
+                        <HtmlTooltip 
                           title={
                             <React.Fragment>
                               <Typography color="inherit">

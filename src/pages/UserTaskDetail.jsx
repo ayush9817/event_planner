@@ -57,7 +57,7 @@ const UserTaskDetail = () => {
     const { userId , missionId } = useParams();
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [isDeleting, setIsDeleting] = useState(true);
     const [open, setOpen] = React.useState(false);
     const [path,setPath] = useState("");
@@ -189,14 +189,14 @@ const UserTaskDetail = () => {
 
         <>
         
-        <TableContainer className="" component={Paper}>
+        <TableContainer className="max-h-[calc(100vh-140px)] overflow-auto" component={Paper}>
         <Table
           sx={{ minWidth: 650 }}
           aria-label="simple table"
           // className="mt-5"
           className="head-padding"
         >
-          <TableHead  style={{ background: "#C8D9ED" }}>
+          <TableHead  style={{ background: "#C8D9ED",position:'sticky',top:0,zIndex:5 }}>
             <TableRow>
               <TableCell align="left">
                 <p className="font-black text-base ">Task Name</p>

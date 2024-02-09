@@ -90,7 +90,7 @@ export default function Dashboard() {
   return (
 
     
-    <>
+    <div className="w-full">
       <DashHeader title={"Dashboard"} />
       <div className="grid grid-cols-1 gap-6 mb-0 lg:grid-cols-3 p-4">
         <div className="min-height bg-blue w-full bg-gray rounded-lg flex justify-between items-center">
@@ -138,6 +138,6 @@ export default function Dashboard() {
        
       </div>
       </div>
-    </>
+    </div>
   );
 }
