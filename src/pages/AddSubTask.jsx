@@ -11,7 +11,8 @@ const TaskInput = () => {
   const { userId } = useParams();
   console.log(userId, "parm id");
   const token = localStorage.getItem("authtoken");
-  
+  const user = localStorage.getItem("user");
+  console.log(user);
   const handleChange = (e) => {
     setTask(e.target.value);
   };
@@ -21,9 +22,10 @@ const TaskInput = () => {
       console.log("Adding subtask:", task);
       const res = await axios.post(
         `${base_Url}data/mission-tasks/`,
-        { name: task, mission: userId },
+        { name: task, mission: userId},
         {
           headers: {
+
             Authorization: `Token ${token}`,
           },
         }

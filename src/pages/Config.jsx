@@ -150,8 +150,8 @@ currentRows.length > 0 ? (
                     <p className="font-black text-base ">Name</p>
                     {" "}
                   </TableCell>
-                  <TableCell  style={{ paddingRight: "100px" }} align="right">
-                  <p className="font-black text-base mr-2 ">Action</p>
+                  <TableCell  style={{ }} align="right">
+                  <p className="font-black text-base text-end mr-16  ">Action</p>
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -161,11 +161,12 @@ currentRows.length > 0 ? (
                     key={row.name}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
+                    <TableCell align="left">
                       {row.mission_type}
                     </TableCell>
-                    <TableCell  align="right">
-                      <div className="flex justify-center items-center gap-2 ml-[690px] 2xl:ml-[1090px]">
+                    <TableCell style={{}} align="left">
+                      
+                      <div className="flex justify-end  items-center gap-2  ">
                      
                       <Button
                         className="inner-head-bg hover:bg-green-700"
@@ -179,6 +180,7 @@ currentRows.length > 0 ? (
                         {activeTab === "active" ? "Inactive" : ""}
                       </button>
                       </div>
+                      
                     </TableCell>
                   </TableRow>
                 ))}

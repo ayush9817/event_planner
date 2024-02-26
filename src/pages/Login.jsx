@@ -32,6 +32,7 @@ export default function Login() {
       });
       console.log(res, "response");
       localStorage.setItem("authtoken", res.data.token);
+      localStorage.setItem('user',res.data.user_id);
       toast.success("Login successfull");
       navigate("/");
     } catch (error) {
