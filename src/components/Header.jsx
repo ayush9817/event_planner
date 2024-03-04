@@ -51,7 +51,7 @@ export default function Header({
   async function filterBasedOnCatagory(id) {
     try {
       const res = await axios.get(
-        `${base_Url}/data/missions/?mission_type=${id}`,
+        `${base_Url}/data/admin-missions/?mission_type=${id}`,
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -79,7 +79,7 @@ export default function Header({
     setMissionType('All');
     try {
       const res = await axios.get(
-        `${base_Url}/data/missions/`,
+        `${base_Url}/data/admin-missions/`,
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -99,7 +99,7 @@ export default function Header({
     setMissionType('Featured');
     try {
       const res = await axios.get(
-        `${base_Url}/data/missions/?is_featured=true`,
+        `${base_Url}/data/admin-missions/?is_featured=true`,
         {
           headers: {
             Authorization: `Token ${token}`,

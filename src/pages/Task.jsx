@@ -122,7 +122,7 @@ export default function Task() {
   };
   async function getMissionD(token) {
     try {
-      const res = await axios.get(`${base_Url}data/missions/`, {
+      const res = await axios.get(`${base_Url}data/admin-missions/`, {
         headers: {
           Authorization: `Token ${token}`,
           

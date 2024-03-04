@@ -31,6 +31,13 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
   }, []);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    // Update the file state when the input changes
+    setFile(e.target.files[0]);
+  };
+
   async function saveCat(token) {
     console.log("run");
     try {
@@ -38,6 +45,9 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
       // const data = {};
 
       fData.append("mission_type", catValue);
+      if (file) {
+        fData.append("file", file);
+      }
       console.log(fData, "fdata");
       const res = await axios.post(`${base_Url}data/mission-type/`, fData, {
         headers: {
@@ -122,6 +132,7 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
             placeholder="Enter Task Name"
           />
           <input
+             onChange={handleFileChange}
             // onChange={(e) => setCatValue(e.target.value)}
             className="w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
             type="file"
