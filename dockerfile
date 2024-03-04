@@ -1,20 +1,14 @@
-# Stage 1: Build React app
-FROM node:20
-
-WORKDIR /app
-
-# Copy package.json and package-lock.json first to leverage Docker cache
+FROM node:18
+ 
+WORKDIR /usr/src/app
+ 
 COPY package*.json ./
-
-# Install dependencies
+ 
 RUN npm install
-
-# Copy the rest of the application code
+ 
 COPY . .
-
-
-# Expose the port that Nginx will run on
+ 
+RUN npm run build
 EXPOSE 3000
-
-# Start Nginx
-CMD ["npm", "run", "dev"]
+ 
+CMD ["npm","run","dev","--","--host","0.0.0.0","--port","3000"]
