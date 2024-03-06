@@ -46,7 +46,7 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
 
       fData.append("mission_type", catValue);
       if (file) {
-        fData.append("file", file);
+        fData.append("category_photo", file);
       }
       console.log(fData, "fdata");
       const res = await axios.post(`${base_Url}data/mission-type/`, fData, {
