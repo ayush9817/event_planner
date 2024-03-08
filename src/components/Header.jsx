@@ -162,7 +162,7 @@ export default function Header({
       console.log('Image:', image);
     } catch (err) {
       console.log(err,"sumbmit");
-      toast.error(`${err.response.data.message}`);
+      toast.error('Failed in adding mission');
     }
   };
   console.log(cat);
@@ -187,7 +187,7 @@ export default function Header({
               <div className="flex justify-center items-center gap-2 ">
               <button
               onClick={download}
-              className="bg-orange-400 hover:bg-blue-500 text-white font-semibold py-2 px-2 rounded"
+              className="bg-orange-400 hover:bg-orange-500 text-white font-semibold py-2 px-2 rounded"
             >
               <Download />
             </button>

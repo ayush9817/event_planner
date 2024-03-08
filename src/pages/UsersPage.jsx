@@ -231,7 +231,7 @@ export default function UsersPage() {
                   
                   </TableCell>
                   <TableCell align="center">
-                    <button className=" inner-head-bg  hover:bg-blue-600 text-white  font-semibold  p-2 rounded mr-2 "
+                    <button className=" inner-head-bg  hover:bg-green-600 text-white  font-semibold  p-2 rounded mr-2 "
                           onClick={() => deleteUser(item.id)}
                     >
                       <Trash2 size={18} />

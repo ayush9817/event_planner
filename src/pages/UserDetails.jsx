@@ -138,7 +138,7 @@ const UserDetails = () => {
                 <TableCell align="left">{row.missions_percentage[row.mission_name]}%</TableCell>
                 <TableCell align="right">
                   <button 
-                    className="inner-head-bg  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-11"
+                    className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-11"
                     onClick={() => handleDelete(row.id)}
                   >
                     <Trash2 size={18}  />

@@ -302,13 +302,13 @@ export default function Task() {
                               handleOpen(row.id);
                             }
                           }
-                          className="inner-head-bg  hover:bg-blue-200 text-white font-bold mx-3 py-2 px-4 rounded"
+                          className="inner-head-bg  hover:bg-green-700 text-white font-bold mx-3 py-2 px-4 rounded"
                         >
                           <PlusCircle size={18} />
                         </button>
 
                         <button
-                          className="inner-head-bg  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                          className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                           onClick={() => handleDelete(row.id)}
                         >
                           <Trash2 size={18} />
@@ -346,13 +346,13 @@ export default function Task() {
               </div>
               <div class="submit-btn mt-3 flex justify-evenly">
                 <button
-                  className="inner-head-bg hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="inner-head-bg hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   onClick={handleAddTask}
                 >
                   Add
                 </button>
                 <button
-                  className="inner-head-bg hover:bg-blue-700 text-white font-bold rounded"
+                  className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
                   onClick={handleClose}
                 >
                   Cancel

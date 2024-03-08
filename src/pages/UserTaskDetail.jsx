@@ -339,7 +339,7 @@ const UserTaskDetail = () => {
 
                 <TableCell align="right">
                   <button 
-                    className="inner-head-bg  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-11"
+                    className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-11"
                     onClick={() => handleDelete(row.id)}
                   >
                     <Trash2 size={18}  />
@@ -396,13 +396,13 @@ const UserTaskDetail = () => {
                 <div class="submit-btn mt-3 flex  justify-between">
                   <button
                     onClick={()=>{handleButtonClick()}}
-                    className="inner-head-bg hover:bg-blue-700 text-white font-bold rounded"
+                    className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
                   >
                     Yes
                   </button>
                   <button
                     onClick={handleClose}
-                    className="inner-head-bg hover:bg-blue-700 text-white font-bold rounded"
+                    className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
                   >
                     No
                   </button>

@@ -76,7 +76,7 @@ const AddMission = () => {
         </div>
         <div className="mb-4">
           <label
-            className="mb-2 block text-gray-700 text-md font-bold mb-2"
+            className="mb-2 block text-gray-700 text-md font-bold "
             htmlFor="categoryDropdown"
           >
             Category
@@ -114,7 +114,7 @@ const AddMission = () => {
         </div>
         <div className="flex items-center justify-between submit-btn">
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold rounded focus:outline-none focus:shadow-outline"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
             Submit
