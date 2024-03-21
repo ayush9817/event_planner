@@ -10,20 +10,47 @@ import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { base_Url } from "../api";
 import Header from "../components/Header";
-import { Trash2 } from "lucide-react";
+import { ArrowDownUp, Pencil, Trash2 } from "lucide-react";
 import AddHeader from "../components/AddHeader";
 import { Button } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import * as XLSX from "xlsx";
 import { Empty } from "antd";
+import Box from "@mui/material/Box";
+
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { toast } from "sonner";
 
 export default function SubTaskList() {
   const token = localStorage.getItem("authtoken");
   const [subTaskData, setSubTaskData] = useState([]);
   const [update, setUpdate] = useState(true);
+  const [row,setRow] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [openModal, setOpenModal] = useState(false);
+  const [etask,setEtask] = useState('');
+  const [order,setOrder] = useState('');
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    borderRadius: 2,
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const handleOpenModal = (row) => {console.log(row,"row"); 
+  setRow(row); 
+  setEtask(row?.name);
+  setOpenModal(true)};
+  const handleCloseModal = () => {setOpenModal(false); setCategory(""); setFile(null); setRow(null);}
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -38,6 +65,33 @@ export default function SubTaskList() {
     setRowsPerPage(event.target.value);
     setCurrentPage(1);
   };
+
+  const handleEdit = async ()=>{
+    const value = localStorage.getItem("authtoken");
+    try {
+      if (etask) {
+        const res = await axios.patch(
+          `${base_Url}/data/mission-tasks/${row.id}`,{name:etask} ,
+          {
+            headers: {
+              Authorization: `Token ${value}`,
+            },
+          }
+        );
+
+        console.log(res,"updated");
+        }
+      else{
+        return;
+      }
+      getSubTask();
+      handleCloseModal();
+      toast.success("Task updated successfully");
+    } catch (error) {
+      toast.error("Task failed to update");
+      console.log(error);
+    }
+  }
 
   const triggerRerender = () => {
     setUpdate((prev) => !prev);
@@ -55,7 +109,7 @@ export default function SubTaskList() {
     }
 
     const sanitizedData = subTaskData.map(
-      ({ creation_date, updated_at, mission, ...rest }) => rest
+      ({ creation_date, updated_at, mission,complete_task,is_created_by_admin,user,task_id ,...rest }) => rest
     );
 
     // Create a workbook with a single worksheet
@@ -92,10 +146,20 @@ export default function SubTaskList() {
     return buf;
   };
 
+  const handleOrder = ()=>{
+    if(order === '-'){
+      setOrder('');
+    }else{
+      setOrder('-');
+    }
+    getSubTask()
+  }
+
   async function getSubTask() {
     try {
+      console.log(`${base_Url}/data/mission-tasks/?mission=${missionId}&ordering=${order}name`)
       const res = await axios.get(
-        `${base_Url}/data/mission-tasks/?mission=${missionId}`,
+        `${base_Url}/data/mission-tasks/?mission=${missionId}&ordering=${order}name`,
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -146,13 +210,16 @@ export default function SubTaskList() {
                   <TableHead style={{ background: "#C8D9ED",position:'sticky',top:0,zIndex:5 }}>
                     <TableRow>
                       <TableCell>
+                        <div className="flex gap-2">
                         <p className="font-black text-base ">Task Name</p>
+                        <ArrowDownUp onClick={handleOrder} />
+                        </div>
                       </TableCell>
                       <TableCell align="left">
                         <p className="font-black text-base ">Mission Name</p>
                       </TableCell>
                       <TableCell style={{ paddingRight: "70px" }} align="right">
-                        <p className="font-black text-base ">Action</p>
+                        <p className="font-black text-base mr-5 ">Action</p>
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -174,12 +241,21 @@ export default function SubTaskList() {
                           align="right"
                           style={{ paddingRight: "60px" }}
                         >
+                        <div className="flex justify-end gap-2">
+                        <button
+                          className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                          onClick={()=>handleOpenModal(row)}
+                        >
+                          <Pencil size={18} />
+                        </button>
                           <button
                             className="inner-head-bg hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                             onClick={() => handleDelete(row.id)}
                           >
                             <Trash2 size={18} />
                           </button>
+                        </div>
+
                         </TableCell>
                       </TableRow>
                     ))}
@@ -196,6 +272,55 @@ export default function SubTaskList() {
               />
             </div>
           </div>
+          <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography
+            style={{ fontSize: "30px", textAlign:"center" }}
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+          >
+            Add Category
+          </Typography>
+          <label
+            className=" mt-4 mb-4 block text-gray-700 text-md font-bold"
+            htmlFor="taskName"
+          >
+            Category Name:
+          </label>
+          <input
+            onChange={(e) => setEtask(e.target.value)}
+            className="mb-4 w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
+            type="text"
+            name="taskName"
+            // value={taskData.taskName}
+            // onChange={handleInputChange}
+            placeholder="Enter Task Name"
+            value = {etask}
+          />
+
+          <div class="submit-btn mt-3 flex justify-evenly">
+            <button
+              onClick={() => handleEdit()}
+              className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
+            >
+              Save
+            </button>
+            <button
+              onClick={handleCloseModal}
+              className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
+            >
+              Cancel
+            </button>
+          </div>
+        </Box>
+      </Modal>
+          
         </>
       ) : (
         <div className="mt-[60px]">

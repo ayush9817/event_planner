@@ -346,7 +346,7 @@ export default function Header({
           id="descriptionInput"
           placeholder="Enter description..."
           value={description}
-          maxLength={50}
+          
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
@@ -401,7 +401,7 @@ export default function Header({
         </div>
       </form>
         </Box>
-      </Modal>
+              </Modal>
             </>
           )}
         </div>

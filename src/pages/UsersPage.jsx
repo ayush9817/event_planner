@@ -180,7 +180,10 @@ export default function UsersPage() {
               <p className="font-black text-base ">Email</p>
               </TableCell>
               <TableCell align="left">
-              <p className="font-black text-base ">DOJ</p>
+              <p className="font-black text-base ">DOB</p>
+              </TableCell>
+              <TableCell align="left">
+              <p className="font-black text-base ">Zipcode</p>
               </TableCell>
               <TableCell align="left">
               <p className="font-black text-base ">Phone</p>
@@ -217,10 +220,12 @@ export default function UsersPage() {
                   <TableCell align="left">{item.last_name}</TableCell>
                   <TableCell align="left">{item.username}</TableCell>
                   <TableCell align="left">{item.email}</TableCell>
-                  <TableCell align="left">{formatDate(item.date_joined)}</TableCell>
+                  <TableCell align="left">{formatDate(item.date_of_birth)}</TableCell>
+                  <TableCell align="left">{item.zip_code}</TableCell>
                   <TableCell align="left">{item.phone_number}</TableCell>
 
                   <TableCell align="left">
+                    <div className="flex gap-2 justify-center items-center">
                   {item.is_active ? "Active" : "Inactive"}
                   <Switch
                   color="warning"
@@ -228,6 +233,7 @@ export default function UsersPage() {
       onChange={()=>handleChange(item.id,item.is_active)}
       inputProps={{ 'aria-label': 'controlled' }}
     />
+    </div>
                   
                   </TableCell>
                   <TableCell align="center">

@@ -6,6 +6,9 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
@@ -15,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Pagination from '@mui/material/Pagination';
 import { Empty } from 'antd';
-import { Trash2 } from "lucide-react";
+import { Pencil, PlusCircle, Trash2 } from "lucide-react";
 export default function Config() {
   const [update,setUpdate] = useState(true);
   const triggerRerender = () => {
@@ -27,6 +30,24 @@ export default function Config() {
   const [inActiveCatData, setInActiveCatData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [openModal, setOpenModal] = useState(false);
+  const [row,setRow] = useState(null);
+  const [category,setCategory] = useState('');
+  const [file, setFile] = useState(null);
+
+
+  console.log(file,"file")
+
+  const handleFileChange = (e) => {
+    // Update the file state when the input changes
+    setFile(e.target.files[0]);
+  };
+
+  const handleOpenModal = (row) => {console.log(row,"row"); 
+  setRow(row); 
+  setCategory(row.mission_type);
+  setOpenModal(true)};
+  const handleCloseModal = () => {setOpenModal(false); setCategory(""); setFile(null); setRow(null);}
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -74,6 +95,7 @@ export default function Config() {
     }
   }
 
+
   async function getInActiveCatData(token) {
     try {
       const res = await axios.get(
@@ -88,6 +110,42 @@ export default function Config() {
       setInActiveCatData(res.data.data.result);
     } catch (error) {
       console.log("error");
+    }
+  }
+
+  const handleUpdate = async ()=>{
+    const value = localStorage.getItem("authtoken");
+    try {
+      console.log(category,"category",file,'file');
+      const formData = new FormData();
+      if (category) {
+        formData.append('mission_type', category);
+      }
+  
+      // Add category_photo to formData if file is not null
+      if (file) {
+        formData.append('category_photo', file);
+      }
+
+      if (formData.has('mission_type') || formData.has('category_photo')) {
+      const res = await axios.patch(
+        `${base_Url}/data/mission-type/${row.id}`,formData ,
+        {
+          headers: {
+            Authorization: `Token ${value}`,
+          },
+        }
+      );
+      console.log(res,"updating category");
+      }
+      getActiveCatData(token);
+      getInActiveCatData(token);
+      toast.success("Category updated successfully");
+      
+      handleCloseModal();
+    } catch (error) {
+      toast.error("Category failed to update");
+      console.log(error);
     }
   }
 
@@ -123,6 +181,18 @@ export default function Config() {
   function handleViewButton(id) {
     navigate(`/catmissionList/${id}`);
   }
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    borderRadius: 2,
+    boxShadow: 24,
+    p: 4,
+  };
   return (
     <>
       <div>
@@ -151,7 +221,7 @@ currentRows.length > 0 ? (
                     {" "}
                   </TableCell>
                   <TableCell  style={{ }} align="right">
-                  <p className="font-black text-base text-end mr-16  ">Action</p>
+                  <p className="font-black text-base text-end mr-24">Action</p>
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -179,6 +249,12 @@ currentRows.length > 0 ? (
                       >
                         {activeTab === "active" ? "Inactive" : ""}
                       </button>
+                      <button
+                          className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                          onClick={()=>handleOpenModal(row)}
+                        >
+                          <Pencil size={18} />
+                        </button>
                       </div>
                       
                     </TableCell>
@@ -195,6 +271,98 @@ currentRows.length > 0 ? (
         rowsPerPage={rowsPerPage}
       />
       </div>
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography
+            style={{ fontSize: "30px", textAlign:"center" }}
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+          >
+            Add Category
+          </Typography>
+          <label
+            className=" mt-4 mb-4 block text-gray-700 text-md font-bold"
+            htmlFor="taskName"
+          >
+            Category Name:
+          </label>
+          <input
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="mb-4 w-full border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
+            type="text"
+            name="taskName"
+            // value={taskData.taskName}
+            // onChange={handleInputChange}
+            placeholder="Enter Task Name"
+          />
+          <input
+            onChange={handleFileChange}
+            className="w-full hidden border rounded-md py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500"
+            type="file"
+            name="taskName"
+            placeholder="Enter Task Name"
+            id="fileInput"
+          />
+
+          {/* <div className="w-full rounded-md h-[100px] mt-2">
+
+          </div> */}
+        
+<div className="flex justify-between">
+        <div  className="relative cursor-pointer ">
+          {!file && !row?.category_photo ? (
+                 <div onClick={() => document.getElementById('fileInput').click()} className="w-40 h-40 border-2 rounded-md mt-3 flex items-center justify-center">
+                                  <div className="flex flex-col items-center justify-center gap-2">
+              No image!
+              <PlusCircle/>
+            </div>
+                  </div>
+          ):(
+            <img
+            src={file ? URL.createObjectURL(file) : (row?.category_photo || '')}
+            alt="Selected photo"
+            className="w-40 h-40 rounded-md mt-3 object-fit"
+            // style={{
+            //   position: 'absolute',
+            //   bottom: '-60px', // Adjust as needed to position the image below the button
+            //   left: '50%', // Position it at the center
+            //   transform: 'translateX(-50%)', // Center it horizontally
+            // }}
+            onClick={() => document.getElementById('fileInput').click()} // Trigger file selection dialog using ref
+          />
+            )} 
+         
+        <div onClick={() => document.getElementById('fileInput').click()} className="absolute bottom-[-7px] right-[-7px] h-7 w-7 rounded-full bg-[#368818] z-40 flex items-center justify-center">
+        <Pencil color="white"  size={17} />
+        </div>
+
+        </div>
+
+          <div class="submit-btn mt-3 flex justify-evenly flex-col mr-5">
+            <button
+              onClick={() => handleUpdate()}
+              className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
+            >
+              Save
+            </button>
+            <button
+              onClick={handleCloseModal}
+              className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
+            >
+              Cancel
+            </button>
+          </div>
+
+          </div>
+        </Box>
+      </Modal>
         </>
   
 ) : (
@@ -265,6 +433,7 @@ currentRows.length > 0 ? (
               </TableBody>
             </Table>
           </TableContainer>
+    
           <div className="flex justify-center items-center mt-5  ">
       <Pagination
         count={Math.ceil(inActiveCatData.length / rowsPerPage)}
