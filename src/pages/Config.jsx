@@ -34,7 +34,7 @@ export default function Config() {
   const [row,setRow] = useState(null);
   const [category,setCategory] = useState('');
   const [file, setFile] = useState(null);
-  const [image,setImage] = useState(null);
+  const [image,setImage] = useState('');
 
 
   console.log(file,"file")
@@ -50,7 +50,7 @@ export default function Config() {
   setFile(row?.category_photo)
   setCategory(row.mission_type);
   setOpenModal(true)};
-  const handleCloseModal = () => {setOpenModal(false); setCategory(""); setFile(null); setRow(null);}
+  const handleCloseModal = () => {setOpenModal(false); setCategory(""); setFile(null); setImage(null); setRow(null);}
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -348,7 +348,7 @@ currentRows.length > 0 ? (
         <Pencil color="white"  size={17} />
         </div>}
 
-        {file &&          <div onClick={() => setFile('')} className="absolute top-[0px] right-[-7px] h-7 w-7 rounded-full bg-[#368818] z-40 flex items-center justify-center">
+        {file &&          <div onClick={() => {setFile(''); setImage('');}} className="absolute top-[0px] right-[-7px] h-7 w-7 rounded-full bg-[#368818] z-40 flex items-center justify-center">
         {/* <CircleX color="white"  size={17} /> */}
         <XCircle color="white" size={17}/>
         </div> }

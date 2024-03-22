@@ -53,7 +53,7 @@ export default function Task() {
   const [category ,setCategory] = useState(null)
   const [des,setDes] = useState('');
   const [loading, setLoading] = useState(true);
-  const [file,setFile] = useState(null);
+  const [file,setFile] = useState('');
 
  
 
@@ -89,6 +89,7 @@ export default function Task() {
       handleCloseModal();
       toast.success("Mission updated successfully");
       setImage(null);
+      setFile('');
     } catch (error) {
       toast.error("Failed to update mission");
       console.log(error);
@@ -652,7 +653,7 @@ export default function Task() {
 {image && 
   
 
-        <div onClick={() => setImage('')} className="absolute top-[0px] right-[-7px] h-7 w-7 rounded-full bg-[#368818] z-40 flex items-center justify-center">
+        <div onClick={() =>{ setImage(''); setFile('');}} className="absolute top-[0px] right-[-7px] h-7 w-7 rounded-full bg-[#368818] z-40 flex items-center justify-center">
         {/* <CircleX color="white"  size={17} /> */}
         <XCircle color="white" size={17}/>
         </div>
