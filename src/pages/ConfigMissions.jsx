@@ -100,7 +100,7 @@ export default function ConfigMissions() {
   async function getCatMission() {
     try {
       const res = await axios.get(
-        `${base_Url}/data/missions/?mission_type=${catId}`,
+        `${base_Url}/data/admin-missions/?mission_type=${catId}`,
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -130,7 +130,7 @@ export default function ConfigMissions() {
           <TableHead  style={{ background: "#C8D9ED",position:'sticky',top:0,zIndex:5 }}>
             <TableRow className=" flex ">
               <TableCell>
-              <p className="font-black text-base ">Tasks</p>
+              <p className="font-black text-base ">Missions</p>
                 </TableCell>
                 <TableCell>
               <p className="font-black text-base ml-[300px] ">Description</p>

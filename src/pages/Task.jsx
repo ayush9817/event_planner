@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
-import { Info, Pencil, PlusCircle, Star, Trash2 } from "lucide-react";
+import { Info, Pencil, PlusCircle, Star, Trash2, XCircle } from "lucide-react";
 import Pagination from "@mui/material/Pagination";
 import { styled } from "@mui/material/styles";
 //import Button from '@mui/material/Button';
@@ -45,6 +45,7 @@ export default function Task() {
   const handleOpenModal = (row) => {
     setMission(row.name);
     setDes(row.description);
+    setImage(row?.mission_detail_photo);
 
     console.log(row,"row"); setRow(row); setOpenModal(true)
   };
@@ -52,6 +53,7 @@ export default function Task() {
   const [category ,setCategory] = useState(null)
   const [des,setDes] = useState('');
   const [loading, setLoading] = useState(true);
+  const [file,setFile] = useState(null);
 
  
 
@@ -63,9 +65,9 @@ export default function Task() {
       if (mission) {
         formData.append('name', mission);
       }
-      if (image) {
-        formData.append('mission_detail_photo', image);
-      }
+       console.log(image,"image");
+        formData.append('mission_detail_photo', file);
+      
       if (category) {
         formData.append('mission_category', category);
       }
@@ -86,6 +88,7 @@ export default function Task() {
       
       handleCloseModal();
       toast.success("Mission updated successfully");
+      setImage(null);
     } catch (error) {
       toast.error("Failed to update mission");
       console.log(error);
@@ -103,9 +106,12 @@ export default function Task() {
 
   const handleAddTaskt = () => {
     // Logic to handle adding tasks
+    if(Task){
     setTasks([...tasks, Task]);
     // Clear input field after adding task if needed
+    
     settask('');
+    }
   };
 
 
@@ -122,6 +128,8 @@ export default function Task() {
   };
   const handleClose = (id) => {
     setOpen(false);
+    settask('')
+    setTasks([])
     setUserId("");
   };
 
@@ -141,7 +149,7 @@ export default function Task() {
   //const [open, setOpen] = React.useState(false);
   const [catId, setCatId] = useState(null);
   const [cat, setCat] = useState([]);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState('');
   const navigate = useNavigate();
   const token = localStorage.getItem("authtoken");
   const [userId, setUserId] = useState("");
@@ -265,7 +273,7 @@ export default function Task() {
       console.log("Adding subtask:", task, userId);
 
       const res = await axios.post(
-        `${base_Url}data/mission-tasks/`,
+        `${base_Url}data/mission-tasks/?mission=${userId}`,
         { task_list: tasks, mission: userId },
         {
           headers: {
@@ -274,6 +282,8 @@ export default function Task() {
         }
       );
       handleClose();
+      setTasks([]);
+      getMissionD(token);
       toast.success("Subtasks added successfully");
       //navigate("/tasks");
     } catch (error) {
@@ -455,7 +465,7 @@ export default function Task() {
         <div className="flex gap-2 w-full flex-wrap  ">
 
           {tasks.map((taskItem, index) => (
-            <div key={index} className="text-gray-700 bg-slate-200 px-2 rounded-lg flex items-center justify-center">
+            <div key={index} className="text-white bg-[#368818] -200 px-2 pb-[2px] rounded-lg flex items-center justify-center">
               {taskItem}
             </div>
           ))}
@@ -599,7 +609,7 @@ export default function Task() {
             type="file"
             placeholder="Enter image URL..."
           //  value={image}
-            onChange={(e) => setImage(e.target.files[0])}
+          onChange={(e) => {setImage(URL.createObjectURL(e.target.files[0])); setFile(e.target.files[0])}    }
           />
 
 
@@ -608,7 +618,7 @@ export default function Task() {
         <div className="flex justify-between">
           <div className="relative cursor-pointer">
 
-        { !image && !row?.mission_detail_photo ? ( 
+        { !image ? ( 
           <div onClick={() => document.getElementById('imageInput').click()} className="w-40 border-2 h-40 rounded-md mt-3 flex items-center justify-center">
             <div className="flex flex-col items-center justify-center gap-2">
               No image!
@@ -617,7 +627,9 @@ export default function Task() {
           </div>
         ) : (
           <img
-          src={image ? URL.createObjectURL(image) : (row?.mission_detail_photo  || '')}
+          src={image 
+            // ? URL.createObjectURL(image) : (row?.mission_detail_photo  || '')
+          }
           alt="Selected photo"
           className="w-40 h-40 rounded-md mt-3 object-fit"
           // style={{
@@ -629,11 +641,26 @@ export default function Task() {
           onClick={() => document.getElementById('imageInput').click()} // Trigger file selection dialog using ref
         />
         ) }
-
-       
-        <div onClick={() => document.getElementById('imageInput').click()} className="absolute bottom-[-7px] right-[-7px] h-7 w-7 rounded-full bg-[#368818] z-40 flex items-center justify-center">
+{image && 
+  
+  <div onClick={() => document.getElementById('imageInput').click()} className="absolute bottom-[-7px] right-[-7px] h-7 w-7 rounded-full bg-[#368818] z-40 flex items-center justify-center">
         <Pencil color="white"  size={17} />
         </div>
+
+        
+}
+{image && 
+  
+
+        <div onClick={() => setImage('')} className="absolute top-[0px] right-[-7px] h-7 w-7 rounded-full bg-[#368818] z-40 flex items-center justify-center">
+        {/* <CircleX color="white"  size={17} /> */}
+        <XCircle color="white" size={17}/>
+        </div>
+        
+}
+       
+
+
          
 
         </div>
@@ -645,7 +672,7 @@ export default function Task() {
           >  
             Submit
           </button>
-          <button  onClick={handleCloseModal} class="g-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
+          <button  onClick={handleCloseModal} class="inner-head-bg hover:bg-green-700 text-white font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
             Cancel
             </button>
         </div>

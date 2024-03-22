@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import Pagination from '@mui/material/Pagination';
 import { Empty } from 'antd';
-import { Pencil, PlusCircle, Trash2 } from "lucide-react";
+import { Pencil, PlusCircle, Trash2, XCircle } from "lucide-react";
 export default function Config() {
   const [update,setUpdate] = useState(true);
   const triggerRerender = () => {
@@ -34,17 +34,20 @@ export default function Config() {
   const [row,setRow] = useState(null);
   const [category,setCategory] = useState('');
   const [file, setFile] = useState(null);
+  const [image,setImage] = useState(null);
 
 
   console.log(file,"file")
 
   const handleFileChange = (e) => {
     // Update the file state when the input changes
-    setFile(e.target.files[0]);
+    setFile(URL.createObjectURL(e.target.files[0]));
+    setImage(e.target.files[0]);
   };
 
   const handleOpenModal = (row) => {console.log(row,"row"); 
   setRow(row); 
+  setFile(row?.category_photo)
   setCategory(row.mission_type);
   setOpenModal(true)};
   const handleCloseModal = () => {setOpenModal(false); setCategory(""); setFile(null); setRow(null);}
@@ -123,9 +126,11 @@ export default function Config() {
       }
   
       // Add category_photo to formData if file is not null
-      if (file) {
-        formData.append('category_photo', file);
-      }
+       formData.append('category_photo', image);
+
+
+      
+      
 
       if (formData.has('mission_type') || formData.has('category_photo')) {
       const res = await axios.patch(
@@ -284,7 +289,7 @@ currentRows.length > 0 ? (
             variant="h6"
             component="h2"
           >
-            Add Category
+            Edit Category
           </Typography>
           <label
             className=" mt-4 mb-4 block text-gray-700 text-md font-bold"
@@ -317,7 +322,7 @@ currentRows.length > 0 ? (
         
 <div className="flex justify-between">
         <div  className="relative cursor-pointer ">
-          {!file && !row?.category_photo ? (
+          {!file  ? (
                  <div onClick={() => document.getElementById('fileInput').click()} className="w-40 h-40 border-2 rounded-md mt-3 flex items-center justify-center">
                                   <div className="flex flex-col items-center justify-center gap-2">
               No image!
@@ -326,7 +331,7 @@ currentRows.length > 0 ? (
                   </div>
           ):(
             <img
-            src={file ? URL.createObjectURL(file) : (row?.category_photo || '')}
+            src={file}
             alt="Selected photo"
             className="w-40 h-40 rounded-md mt-3 object-fit"
             // style={{
@@ -338,10 +343,18 @@ currentRows.length > 0 ? (
             onClick={() => document.getElementById('fileInput').click()} // Trigger file selection dialog using ref
           />
             )} 
-         
-        <div onClick={() => document.getElementById('fileInput').click()} className="absolute bottom-[-7px] right-[-7px] h-7 w-7 rounded-full bg-[#368818] z-40 flex items-center justify-center">
+
+            {file &&         <div onClick={() => document.getElementById('fileInput').click()} className="absolute bottom-[-7px] right-[-7px] h-7 w-7 rounded-full bg-[#368818] z-40 flex items-center justify-center">
         <Pencil color="white"  size={17} />
-        </div>
+        </div>}
+
+        {file &&          <div onClick={() => setFile('')} className="absolute top-[0px] right-[-7px] h-7 w-7 rounded-full bg-[#368818] z-40 flex items-center justify-center">
+        {/* <CircleX color="white"  size={17} /> */}
+        <XCircle color="white" size={17}/>
+        </div> }
+         
+
+
 
         </div>
 

@@ -50,7 +50,7 @@ export default function SubTaskList() {
   setRow(row); 
   setEtask(row?.name);
   setOpenModal(true)};
-  const handleCloseModal = () => {setOpenModal(false); setCategory(""); setFile(null); setRow(null);}
+  const handleCloseModal = () => {setOpenModal(false); setEtask(""); setRow(null);}
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -285,13 +285,13 @@ export default function SubTaskList() {
             variant="h6"
             component="h2"
           >
-            Add Category
+            Edit task
           </Typography>
           <label
             className=" mt-4 mb-4 block text-gray-700 text-md font-bold"
             htmlFor="taskName"
           >
-            Category Name:
+            Task Name:
           </label>
           <input
             onChange={(e) => setEtask(e.target.value)}
