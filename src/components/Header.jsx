@@ -151,6 +151,11 @@ export default function Header({
           'Content-Type': 'multipart/form-data',
         },
       });
+
+      setMission("");
+      setDescription("");
+      setImage(null);
+      setCatId(null);
   
       toast.success('Mission added successfully');
       console.log(renders, 'render');

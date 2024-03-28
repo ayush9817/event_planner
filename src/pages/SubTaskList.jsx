@@ -109,7 +109,7 @@ export default function SubTaskList() {
     }
 
     const sanitizedData = subTaskData.map(
-      ({ creation_date, updated_at, mission,complete_task,is_created_by_admin,user,task_id ,...rest }) => rest
+      ({ creation_date, updated_at, mission,complete_task,mission_category,is_created_by_admin,user,task_id ,...rest }) => rest
     );
 
     // Create a workbook with a single worksheet
