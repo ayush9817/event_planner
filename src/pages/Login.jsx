@@ -95,6 +95,7 @@ export default function Login() {
           </a> */}
           <div className="mt-6">
             <button
+             disabled={dis}
               onClick={(e) => handleLogin(e)}
               className={`w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform inner-head-bg rounded-md hover:bg-green-700 focus:outline-none focus:bg-green-800 ${dis?'cursor-not-allowed':''} `}
             >

@@ -35,6 +35,7 @@ export default function Config() {
   const [category,setCategory] = useState('');
   const [file, setFile] = useState(null);
   const [image,setImage] = useState('');
+  const [loading,setLoading] = useState(false);
 
 
   console.log(file,"file")
@@ -82,7 +83,9 @@ export default function Config() {
   }, [activeTab,update]);
 
   async function getActiveCatData(token) {
+    
     try {
+      setLoading(true)
       const res = await axios.get(
         `${base_Url}/data/mission-type/?is_active=True`,
         {
@@ -92,8 +95,10 @@ export default function Config() {
         }
       );
       console.log("res", res.data.data.result);
+      setLoading(false);
       setActiveCatData(res.data.data.result);
     } catch (error) {
+      setLoading(false);
       console.log("error", error);
     }
   }
@@ -101,6 +106,7 @@ export default function Config() {
 
   async function getInActiveCatData(token) {
     try {
+      setLoading(true);
       const res = await axios.get(
         `${base_Url}/data/mission-type/?is_active=False`,
         {
@@ -111,7 +117,9 @@ export default function Config() {
       );
       console.log("res", res.data.data.result);
       setInActiveCatData(res.data.data.result);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log("error");
     }
   }
@@ -119,6 +127,7 @@ export default function Config() {
   const handleUpdate = async ()=>{
     const value = localStorage.getItem("authtoken");
     try {
+      setLoading(true);
       console.log(category,"category",file,'file');
       const formData = new FormData();
       if (category) {
@@ -148,7 +157,9 @@ export default function Config() {
       toast.success("Category updated successfully");
       
       handleCloseModal();
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       toast.error("Category failed to update");
       console.log(error);
     }
@@ -156,6 +167,7 @@ export default function Config() {
 
   async function handleSwitch(id, token, action) {
     try {
+      setLoading(true);
       const res = await axios.patch(
         `${base_Url}data/mission-type/${id}`,
         {
@@ -177,7 +189,9 @@ export default function Config() {
       }
       // navigate("/dashboard");
       toast.success("Category switched successfully");
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
    
@@ -244,17 +258,20 @@ currentRows.length > 0 ? (
                       <div className="flex justify-end  items-center gap-2  ">
                      
                       <Button
+                        disabled={loading}
                         className="inner-head-bg hover:bg-green-700"
                         onClick={() => handleViewButton(row.id)}
                         title="View Missions"
                       />
                       <button
+                      disabled={loading}
                         onClick={() => handleSwitch(row.id, token, false)}
                         className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded "
                       >
                         {activeTab === "active" ? "Inactive" : ""}
                       </button>
                       <button
+                       disabled={loading}
                           className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                           onClick={()=>handleOpenModal(row)}
                         >
@@ -360,12 +377,14 @@ currentRows.length > 0 ? (
 
           <div class="submit-btn mt-3 flex justify-evenly flex-col mr-5">
             <button
+               disabled={loading}
               onClick={() => handleUpdate()}
               className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
             >
               Save
             </button>
             <button
+            disabled={loading}
               onClick={handleCloseModal}
               className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
             >

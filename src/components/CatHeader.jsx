@@ -25,7 +25,9 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
   const [open, setOpen] = React.useState(false);
   const [catValue, setCatValue] = useState("");
   const [token, setToken] = useState("");
+  const [loading,setLoading] = useState(false);
   useEffect(() => {
+
     const res = localStorage.getItem("authtoken");
     setToken(res);
   }, []);
@@ -39,8 +41,10 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
   };
 
   async function saveCat(token) {
+
     console.log("run");
     try {
+      setLoading(true);
       const fData = new FormData();
       // const data = {};
 
@@ -57,9 +61,11 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
       toast.success("Category added successfully");
       render();
       handleClose();
+      setLoading(false);
       navigate("/dashboard");
       navigate("/config");
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   }
@@ -72,6 +78,7 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
       <div class="text-2xl font-bold text-white">{title}</div>
       <div className="mx-3 ml-auto">
         <button
+          disabled={loading}
           onClick={handleOpen}
           className={`${"bg-orange-400 hover:bg-orange-500 text-white"} px-4 py-2 rounded-md ml-auto`}
         >

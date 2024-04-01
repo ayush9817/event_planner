@@ -54,11 +54,13 @@ export default function Task() {
   const [des,setDes] = useState('');
   const [loading, setLoading] = useState(true);
   const [file,setFile] = useState('');
+  const [taskloading,settaskloading] = useState(false);
 
  
 
   const handleSubmitUpdate = async (e)=>{
     e.preventDefault()
+    settaskloading(true);
     const value = localStorage.getItem("authtoken");
     try {
       const formData = new FormData();
@@ -85,12 +87,14 @@ export default function Task() {
       console.log(res,"updating category");
       }
       getMissionD(token);
-      
+      settaskloading(false);     
       handleCloseModal();
       toast.success("Mission updated successfully");
       setImage(null);
       setFile('');
+
     } catch (error) {
+      settaskloading(false);
       toast.error("Failed to update mission");
       console.log(error);
     }
@@ -246,14 +250,18 @@ export default function Task() {
     navigate("/addMission");
   }
   async function handleDelete(id) {
+    settaskloading(true);
     try {
       await axios.delete(`${base_Url}/data/missions/${id}`, {
         headers: {
           Authorization: `Token ${token}`,
         },
       });
+      settaskloading(false);
       toast.success("Deleted succesfully");
+      
     } catch (error) {
+      settaskloading(false);
       console.log(error);
     }
     const data = mData.filter((item) => item.id != id);
@@ -271,6 +279,7 @@ export default function Task() {
 
   const handleAddTask = async () => {
     try {
+      settaskloading(true);
       console.log("Adding subtask:", task, userId);
 
       const res = await axios.post(
@@ -285,9 +294,11 @@ export default function Task() {
       handleClose();
       setTasks([]);
       getMissionD(token);
+      settaskloading(false);
       toast.success("Subtasks added successfully");
       //navigate("/tasks");
     } catch (error) {
+      settaskloading(false);
       handleClose();
       console.log(error);
       toast.error("Failed Adding Subtask");
@@ -397,6 +408,7 @@ export default function Task() {
                     <TableCell align="right">
                       <div className="flex gap-2 items-center justify-end">
                         <button
+                          disabled={taskloading}
                           style={{}}
                           onClick={
                             //navigate(`/addSubtask/${row.id}`);
@@ -409,6 +421,7 @@ export default function Task() {
                           <PlusCircle size={18} />
                         </button>
                         <button
+                          disabled={taskloading}
                           className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                           onClick={()=>handleOpenModal(row)}
                         >
@@ -416,6 +429,7 @@ export default function Task() {
                         </button>
 
                         <button
+                          disabled={taskloading}
                           className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                           onClick={() => handleDelete(row.id)}
                         >
@@ -476,10 +490,12 @@ export default function Task() {
           <button
             className="inner-head-bg hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             onClick={handleAddTask}
+            disabled={taskloading}
           >
             Submit
           </button>
           <button
+            disabled={taskloading}
             className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
             onClick={handleClose}
           >
@@ -670,10 +686,11 @@ export default function Task() {
             className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
              
             type="submit"
+        disabled={taskloading}
           >  
             Submit
           </button>
-          <button  onClick={handleCloseModal} class="inner-head-bg hover:bg-green-700 text-white font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
+          <button disabled={taskloading}  onClick={handleCloseModal} class="inner-head-bg hover:bg-green-700 text-white font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
             Cancel
             </button>
         </div>

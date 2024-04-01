@@ -120,7 +120,7 @@ export default function Header({
   const [description, setDescription] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [missionType,setMissionType] = useState('Categories');
-  //const [file,setFile] = useState(null);
+  const [loading,setLoading] = useState(false);  //const [file,setFile] = useState(null);
   console.log(image);
 
   const handleMenuItemClickk = (event, item) => {
@@ -129,11 +129,20 @@ export default function Header({
   };
   
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () =>{ 
+    setOpen(false)
+    setMission("");
+    setDescription("");
+    setImage(null);
+    setCatId(null);
+  
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    handleClose();
+    setLoading(true);
+   
+    
     try {
       const formData = new FormData();
       formData.append('name', mission);
@@ -152,10 +161,14 @@ export default function Header({
         },
       });
 
+      handleClose();
+
       setMission("");
       setDescription("");
       setImage(null);
       setCatId(null);
+
+
   
       toast.success('Mission added successfully');
       console.log(renders, 'render');
@@ -165,7 +178,9 @@ export default function Header({
   
       console.log('Mission:', mission);
       console.log('Image:', image);
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       console.log(err,"sumbmit");
       toast.error('Failed in adding mission');
     }
@@ -396,11 +411,12 @@ export default function Header({
         <div className="flex items-center justify-evenly submit-btn">
           <button
             className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
+            disabled={loading}
             type="submit"
           >
             Submit
           </button>
-          <button  onClick={handleClose} class="g-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
+          <button disabled={loading}  onClick={handleClose} class="g-transparent hover:bg-green-500 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
             Cancel
             </button>
         </div>

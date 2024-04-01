@@ -66,6 +66,9 @@ export default function ConfigMissions() {
     // Create a workbook with a single worksheet
     const ws = XLSX.utils.json_to_sheet(sanitizedData);
 
+    const columnWidths = [{ wch: 20 }, { wch: 30 }, { wch: 30 }, { wch: 20 },{ wch: 30 }, { wch: 30 },{ wch: 30 }, { wch: 30 },]; // Specify the width for each column
+    ws['!cols'] = columnWidths;
+
   // Create a workbook
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Sheet 1');

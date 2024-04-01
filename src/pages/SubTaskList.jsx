@@ -33,6 +33,7 @@ export default function SubTaskList() {
   const [openModal, setOpenModal] = useState(false);
   const [etask,setEtask] = useState('');
   const [order,setOrder] = useState('');
+  const [loading,setLoading] = useState(false);
 
   const style = {
     position: "absolute",
@@ -67,6 +68,7 @@ export default function SubTaskList() {
   };
 
   const handleEdit = async ()=>{
+    setLoading(true);
     const value = localStorage.getItem("authtoken");
     try {
       if (etask) {
@@ -85,9 +87,11 @@ export default function SubTaskList() {
         return;
       }
       getSubTask();
+      setLoading(false);
       handleCloseModal();
       toast.success("Task updated successfully");
     } catch (error) {
+      setLoading(false);
       toast.error("Task failed to update");
       console.log(error);
     }
@@ -109,11 +113,23 @@ export default function SubTaskList() {
     }
 
     const sanitizedData = subTaskData.map(
-      ({ creation_date, updated_at, mission,complete_task,mission_category,is_created_by_admin,user,task_id ,...rest }) => rest
+      ({ creation_date, updated_at, mission,complete_task,is_created_by_admin,user,task_id ,...rest }) => rest
     );
 
     // Create a workbook with a single worksheet
     const ws = XLSX.utils.json_to_sheet(sanitizedData);
+
+  // Centering the content in each cell
+  Object.keys(ws).forEach(cellAddress => {
+    const cell = ws[cellAddress];
+    if (cell && cell.t) {
+      cell.s = { alignCentre: true };
+    }
+  });
+  
+    // Adjusting column sizes
+    const columnWidths = [{ wch: 20 }, { wch: 30 }, { wch: 30 }, { wch: 20 }]; // Specify the width for each column
+    ws['!cols'] = columnWidths;
 
     // Create a workbook
     const wb = XLSX.utils.book_new();
@@ -156,6 +172,7 @@ export default function SubTaskList() {
   }
 
   async function getSubTask() {
+    setLoading(true);
     try {
       console.log(`${base_Url}/data/mission-tasks/?mission=${missionId}&ordering=${order}name`)
       const res = await axios.get(
@@ -166,21 +183,27 @@ export default function SubTaskList() {
           },
         }
       );
+      setLoading(false);
       setSubTaskData(res.data.data.result);
       console.log("rel", res.data.data.result);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   }
   async function handleDelete(id) {
+    
     console.log(id);
     try {
+      setLoading(true);
       axios.delete(`${base_Url}/data/mission-tasks/${id}`, {
         headers: {
           Authorization: `Token ${token}`,
         },
       });
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
     const data = subTaskData.filter((item) => item.id != id);
@@ -243,12 +266,14 @@ export default function SubTaskList() {
                         >
                         <div className="flex justify-end gap-2">
                         <button
+                         disabled={loading}
                           className="inner-head-bg  hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                           onClick={()=>handleOpenModal(row)}
                         >
                           <Pencil size={18} />
                         </button>
                           <button
+                           disabled={loading}
                             className="inner-head-bg hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                             onClick={() => handleDelete(row.id)}
                           >
@@ -306,12 +331,14 @@ export default function SubTaskList() {
 
           <div class="submit-btn mt-3 flex justify-evenly">
             <button
+              disabled={loading}
               onClick={() => handleEdit()}
               className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
             >
               Save
             </button>
             <button
+              disabled={loading}
               onClick={handleCloseModal}
               className="inner-head-bg hover:bg-green-700 text-white font-bold rounded"
             >

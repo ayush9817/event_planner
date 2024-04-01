@@ -12,6 +12,7 @@ const AddMission = () => {
   const [catId, setCatId] = useState(null);
   const token = localStorage.getItem("authtoken");
   const [cat, setCat] = useState([]);
+  const [loading,setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
