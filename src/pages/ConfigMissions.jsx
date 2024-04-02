@@ -61,7 +61,7 @@ export default function ConfigMissions() {
       return;
     }
 
-    const sanitizedData = missionData.map(({ tasks,total_friends_in_mission, mission_type,creation_date,updated_at, user, ...rest }) => rest);
+    const sanitizedData = missionData.map(({ tasks,total_friends_in_mission,mission_detail_photo,is_created_by_admin,is_joined ,mission_type,creation_date,updated_at, user, ...rest }) => rest);
 
     // Create a workbook with a single worksheet
     const ws = XLSX.utils.json_to_sheet(sanitizedData);
