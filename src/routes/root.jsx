@@ -20,7 +20,7 @@ export default function Root() {
         <div className="flex flex-col h-screen bg-white shadow w-60">
           <div className="">
             <div className="flex items-center">
-              <div className="sidebar-logo flex gap-2 justify-center items-center h-[72px] ">
+              <div className="sidebar-logo flex gap-2 justify-start items-center h-[72px] ">
                 
                 <img src="/logo2.png" alt="List Tracker Logo" className="h-[40px]" />
               </div>
