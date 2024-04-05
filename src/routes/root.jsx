@@ -22,7 +22,7 @@ export default function Root() {
             <div className="flex items-center">
               <div className="sidebar-logo flex gap-2 justify-center items-center h-[72px] ">
                 
-                <img src="/logo.png" alt="List Tracker Logo" className="h-[40px]" />
+                <img src="/logo2.png" alt="List Tracker Logo" className="h-[40px]" />
               </div>
             </div>
             <div className="flex-1">

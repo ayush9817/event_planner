@@ -119,6 +119,19 @@ export default function SubTaskList() {
     // Create a workbook with a single worksheet
     const ws = XLSX.utils.json_to_sheet(sanitizedData);
 
+    
+  // Make the first row bold
+  const headers = Object.keys(sanitizedData[0]);
+  headers.forEach((header, index) => {
+    const cell = XLSX.utils.encode_cell({ r: 0, c: index });
+    ws[cell].s = { font: { bold: true } };
+  });
+
+
+ 
+ 
+  
+
   // Centering the content in each cell
   Object.keys(ws).forEach(cellAddress => {
     const cell = ws[cellAddress];
@@ -154,6 +167,8 @@ export default function SubTaskList() {
     // Remove the anchor element
     document.body.removeChild(a);
   };
+
+  
 
   const s2ab = (s) => {
     const buf = new ArrayBuffer(s.length);
