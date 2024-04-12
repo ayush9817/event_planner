@@ -77,11 +77,12 @@ export default function Task() {
        }
       
       if (category) {
-        formData.append('mission_category', category);
+        formData.append('mission_type', category.id);
       }
       if(des){
         formData.append('description', des);
       }
+      console.log(category,"formdata");
       if (formData.has('name') || formData.has('mission_detail_photo') || formData.has('mission_category') || formData.has('description')  ) {
       const res = await axios.patch(`${base_Url}data/missions/${row.id}`,formData,
         {
@@ -98,6 +99,10 @@ export default function Task() {
       toast.success("Mission updated successfully");
       setImage(null);
       setFile('');
+      setMission('');
+      setDes('')
+      setCategory(null)
+
 
     } catch (error) {
       settaskloading(false);
