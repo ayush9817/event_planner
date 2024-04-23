@@ -6,6 +6,8 @@ import { CalendarCheck, Settings2, SquareUser, User } from "lucide-react";
 import DashHeader from "../components/DashHeader";
 import axios from "axios";
 import { base_Url } from "../api";
+import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
+import Chart from "react-apexcharts";
 
 
 
@@ -43,6 +45,7 @@ export default function Dashboard() {
     height: 330,
     color: '#fdb462',
     colors:['#368818']
+    
 
 
     // sx: {
@@ -86,12 +89,53 @@ export default function Dashboard() {
   const xAxisDataLength = xAxisData ? xAxisData.length : 0;
   const seriesDataSum = seriesData ? seriesData.reduce((sum, value) => sum + value, 0) : 0;
 
+  const state = {
+    options: {
+      chart: {
+        toolbar: {
+          show: true,
+          tools: {
+            download: false
+          }
+        }
+      
+      },
+      xaxis: {
+        categories: xAxisData,
+        axisBorder: {
+          //show: false,
+      },
+
+      },
+      yaxis: {
+        title: {
+        text: 'Missions',
+        }
+      },
+      dataLabels:{
+         enabled:false
+      },
+      fill: {
+        colors: ['#368818']
+      }
+    },
+    series: [
+      {
+        name: "series-1",
+        data: seriesData
+      }
+    ],
+
+  };
+
+
 
   return (
 
     
-    <div className="w-full">
+    <div className="w-full ">
       <DashHeader title={"Dashboard"} />
+      <div className="overflow-y-auto">
       <div className="grid grid-cols-1 gap-6 mb-0 lg:grid-cols-3 p-4">
         <div className="min-height bg-blue w-full bg-gray rounded-lg flex justify-between items-center">
           <div className="text-sm font-medium text-gray truncate">
@@ -122,22 +166,42 @@ export default function Dashboard() {
         </div>
       </div>
       
-      <div className=" w-full flex justify-center h-[calc(100vh-230px)] items-center ">
+      <div className=" w-full flex justify-center h-[calc(100vh-230px)] items-center   ">
       {/* <div className="ml-[180px] "> */}
 
       {xAxisData?.length > 0 ? (
-            <BarChart
-              xAxis={[{ scaleType: "band", data: xAxisData }]}
-              series={[{ data: seriesData }]}
-              {...chartSetting}
+      //      <ResponsiveChartContainer>
+            // <BarChart
+            //   xAxis={[{ scaleType: "band", data: xAxisData, 
+ 
+
+
+            //                 tickLabelStyle: {
+            //   angle: 20,
+            //     textAnchor: 'middle',
+            //     fontSize: 12,
+                
+            //   }, }]}
+            //   series={[{ data: seriesData }]}
+            //   {...chartSetting}
+ 
+          
              
-            />
+            // />
+            <Chart
+            options={state.options}
+            series={state.series}
+            type="bar"
+            width="600"
+          />
+        //    </ResponsiveChartContainer>
           ) : (
             <div>No data available for the chart.</div>
           )}
         
        
       {/* </div> */}
+      </div>
       </div>
     </div>
   );

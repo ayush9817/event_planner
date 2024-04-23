@@ -56,12 +56,19 @@ export default function ConfigMissions() {
   console.log(catId, "param");
 
   const convertJsonToExcel = () => {
-    if (!missionData) {
+    if (missionData.length===0) {
       console.error('JSON data is not available.');
-      return;
+      
     }
 
-    const sanitizedData = missionData.map(({ tasks,total_friends_in_mission,mission_detail_photo,is_created_by_admin,is_joined,is_featured ,mission_type,creation_date,updated_at, user, ...rest }) => rest);
+    let sanitizedData = [];
+    if(missionData.length===0){
+      sanitizedData = [{id:"",mission_category:"",description:"",name:""}]
+    }else{
+      sanitizedData = missionData.map(({ tasks,total_friends_in_mission,mission_detail_photo,is_created_by_admin,is_joined,is_featured ,mission_type,creation_date,friend_names,updated_at, user, ...rest }) => rest);
+    }
+
+   // const sanitizedData = missionData.map(({ tasks,total_friends_in_mission,mission_detail_photo,is_created_by_admin,is_joined,is_featured ,mission_type,creation_date,friend_names,updated_at, user, ...rest }) => rest);
 
     // Create a workbook with a single worksheet
     const ws = XLSX.utils.json_to_sheet(sanitizedData);

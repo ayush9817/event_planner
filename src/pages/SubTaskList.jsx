@@ -107,25 +107,33 @@ export default function SubTaskList() {
   }, [update]);
 
   const convertJsonToExcel = () => {
-    if (!subTaskData) {
-      console.error("JSON data is not available.");
-      return;
+    console.log("json");
+    console.log(subTaskData,'subrask');
+    if (subTaskData.length===0) {
+      console.log("JSON data is not available.");
     }
+    let sanitizedData = [];
+    if(subTaskData.length===0){
+      sanitizedData = [{id:"",mission_category:"",is_edit:"",name:""}]
+    }else{
+       sanitizedData = subTaskData.map(
+        ({ creation_date, updated_at, mission,complete_task,is_created_by_admin,user,is_edit,task_id ,...rest }) => rest
+      );
+    }
+    
 
-    const sanitizedData = subTaskData.map(
-      ({ creation_date, updated_at, mission,complete_task,is_created_by_admin,user,task_id ,...rest }) => rest
-    );
+ 
 
     // Create a workbook with a single worksheet
     const ws = XLSX.utils.json_to_sheet(sanitizedData);
 
     
   // Make the first row bold
-  const headers = Object.keys(sanitizedData[0]);
-  headers.forEach((header, index) => {
-    const cell = XLSX.utils.encode_cell({ r: 0, c: index });
-    ws[cell].s = { font: { bold: true } };
-  });
+  // const headers = Object.keys(sanitizedData[0]);
+  // headers.forEach((header, index) => {
+  //   const cell = XLSX.utils.encode_cell({ r: 0, c: index });
+  //   ws[cell].s = { font: { bold: true } };
+  // });
 
 
  
