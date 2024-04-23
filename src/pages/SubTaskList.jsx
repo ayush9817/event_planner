@@ -114,10 +114,10 @@ export default function SubTaskList() {
     }
     let sanitizedData = [];
     if(subTaskData.length===0){
-      sanitizedData = [{id:"",mission_category:"",is_edit:"",name:""}]
+      sanitizedData = [{id:"",mission_name:"",name:""}]
     }else{
        sanitizedData = subTaskData.map(
-        ({ creation_date, updated_at, mission,complete_task,is_created_by_admin,user,is_edit,task_id ,...rest }) => rest
+        ({ creation_date, updated_at, mission,mission_category,complete_task,is_created_by_admin,user,is_edit,task_id ,...rest }) => rest
       );
     }
     
