@@ -278,10 +278,12 @@ export default function SubTaskList() {
                         }}
                       >
                         <TableCell component="th" scope="row">
-                          {row.name}
+
+                          <div className="w-[250px] flex-wrap break-words"> {row.name} </div>
                         </TableCell>
                         <TableCell align="left">
-                          {row.mission_category}
+                        <div className="w-[250px] flex-wrap break-words"> {row.mission_category} </div>
+                          
                         </TableCell>
                         <TableCell
                           align="right"

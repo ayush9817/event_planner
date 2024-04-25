@@ -350,7 +350,7 @@ export default function Header({
             type="text"
             placeholder="Enter mission..."
             value={mission}
-            maxLength={25}
+            maxLength={100}
             onChange={(e) => setMission(e.target.value)}
           />
         </div>

@@ -258,7 +258,8 @@ currentRows.length > 0 ? (
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell align="left">
-                      {row.mission_type}
+                     
+                      <div className="w-[250px] flex-wrap break-words">  {row.mission_type}</div>
                     </TableCell>
                     <TableCell style={{}} align="left">
                       
@@ -329,6 +330,7 @@ currentRows.length > 0 ? (
             name="taskName"
             // value={taskData.taskName}
             // onChange={handleInputChange}
+            maxLength={25}
             placeholder="Enter Task Name"
           />
           <input

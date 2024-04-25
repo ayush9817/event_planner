@@ -377,11 +377,14 @@ export default function Task() {
                       onClick={() => navigate(`/tasks-view/${row.id}`)}
                       component="th"
                       scope="row"
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: "pointer",width:'250px' }}
                     >
-                      {row.name}
+                      <div className="w-[250px] flex-wrap break-words"> {row.name} </div>
                     </TableCell>
-                    <TableCell>{row.mission_category}</TableCell>
+                    <TableCell>
+                      
+                      <div className="w-[160px] flex-wrap break-words"> {row.mission_category} </div>
+                      </TableCell>
 
                     <TableCell align="left">
                       <div className="ml-5">
@@ -389,7 +392,7 @@ export default function Task() {
                           title={
                             <React.Fragment>
                               <Typography color="inherit">
-                                {row.name}
+                               {row.name} 
                               </Typography>
                               {row.description}
                             </React.Fragment>
@@ -491,8 +494,9 @@ export default function Task() {
         <div className="flex gap-2 w-full flex-wrap  ">
 
           {tasks.map((taskItem, index) => (
-            <div key={index} className="text-white bg-[#368818] -200 px-2 pb-[2px] rounded-lg flex items-center justify-center">
-              {taskItem}
+            <div key={index} className="text-white bg-[#368818]  px-2 pb-[2px] rounded-lg flex items-center justify-center break-words">
+             
+              <div className="max-w-[250px] flex-wrap break-words">  {taskItem} </div>
             </div>
           ))}
         </div>
@@ -547,7 +551,7 @@ export default function Task() {
             type="text"
             placeholder="Enter mission..."
             value={mission}
-            maxLength={25}
+            maxLength={100}
             onChange={(e) => setMission(e.target.value)}
           />
         </div>

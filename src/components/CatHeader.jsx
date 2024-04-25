@@ -135,6 +135,7 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
             type="text"
             name="taskName"
             // value={taskData.taskName}
+            maxLength={25}
             // onChange={handleInputChange}
             placeholder="Enter Task Name"
           />
@@ -146,6 +147,7 @@ const CatHeader = ({ setActiveTab, activeTab, title ,render}) => {
             name="taskName"
             // value={taskData.taskName}
             // onChange={handleInputChange}
+
             placeholder="Enter Task Name"
           />
           <div class="submit-btn mt-3 flex justify-evenly">
